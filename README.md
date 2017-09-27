@@ -5,7 +5,7 @@ microframework.
 
 ## Team
 
-- Jane Doe
+- Khalid Almalki
 
 - John Doe
 
