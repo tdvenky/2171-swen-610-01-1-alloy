@@ -9,11 +9,9 @@ microframework.
 
 - Venkatesh
 
-- John Doe
+- Kritin Moondra
 
--Kritin Moondra
-
--Omar Gharbia
+- Omar Gharbia
 
 ##Prerequisites
 
