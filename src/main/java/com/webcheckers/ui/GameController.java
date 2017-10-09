@@ -1,8 +1,11 @@
 package com.webcheckers.ui;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
+=======
+>>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
 =======
 >>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
 import spark.ModelAndView;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameController implements TemplateViewRoute {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     @Override
@@ -37,6 +41,8 @@ public class GameController implements TemplateViewRoute {
 
         return new ModelAndView(vm , "./game.ftl");
 =======
+=======
+>>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
@@ -50,6 +56,9 @@ public class GameController implements TemplateViewRoute {
 //        vm.put("board", "Welcome!");
 //        vm.put("currentPlayer", "Welcome!");
         return new ModelAndView(vm , "game.ftl");
+<<<<<<< HEAD
+>>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
+=======
 >>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
     }
 }
