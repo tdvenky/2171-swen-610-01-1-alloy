@@ -1,7 +1,10 @@
 package com.webcheckers.ui;
 
+<<<<<<< HEAD
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
+=======
+>>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -11,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GameController implements TemplateViewRoute {
+<<<<<<< HEAD
 
     @Override
     public ModelAndView handle(Request request, Response response) {
@@ -32,5 +36,20 @@ public class GameController implements TemplateViewRoute {
 
 
         return new ModelAndView(vm , "./game.ftl");
+=======
+    @Override
+    public ModelAndView handle(Request request, Response response) {
+        Map<String, Object> vm = new HashMap<>();
+//        vm.put("title", "Welcome!");
+//        vm.put("playerName", "Welcome!");
+//        vm.put("playerColor", "Welcome!");
+//        vm.put("isMyTurn", true);
+//        vm.put("opponentName", "Welcome!");
+//        vm.put("opponentColor", "Welcome!");
+//        vm.put("message", "Welcome!");
+//        vm.put("board", "Welcome!");
+//        vm.put("currentPlayer", "Welcome!");
+        return new ModelAndView(vm , "game.ftl");
+>>>>>>> 753f41fbf011a04aebbf196a4989f2fed3195a88
     }
 }
