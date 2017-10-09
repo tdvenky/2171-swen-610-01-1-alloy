@@ -9,7 +9,7 @@
   <div class="page">
 
   <div class="body">
-        <h1>Welcome to the world of online Checkers</h1>
+        <h1 align="center">Welcome to the world of online Checkers</h1>
       </div>
 
     <p align="center">Login to Web Checkers</p>
