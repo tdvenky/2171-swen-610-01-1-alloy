@@ -7,17 +7,22 @@
 </head>
 <body>
   <div class="page">
-  
-    <h1>Web Checkers</h1>
-    
-    <div class="navigation">
-      <a href="/">my home</a>
-    </div>
-    
-    <div class="body">
-      <p>Welcome to the world of online Checkers.</p>
-    </div>
-    
+
+  <div class="body">
+        <h1>Welcome to the world of online Checkers</h1>
+      </div>
+
+    <p align="center">Login to Web Checkers</p>
+
+    <section class="container">
+        <div class="login">
+          <form method="post">
+            <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
+            <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
+            <p align="center" class="submit"><input type="submit" name="commit" value="Login"></p>
+          </form>
+        </div>
+      </section>
   </div>
 </body>
 </html>
