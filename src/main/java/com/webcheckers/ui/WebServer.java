@@ -122,6 +122,8 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new HomeController(), templateEngine);
     get(GAME_URL, new GameController(), templateEngine);
+    post("/login", new PostLoginController(), templateEngine);
+
     post("/submitTurn", new submitTurnController(), templateEngine);
 
 

@@ -16,7 +16,7 @@
 
     <section class="container">
         <div class="login">
-          <form method="post">
+          <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
             <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
             <p align="center" class="submit"><input type="submit" name="commit" value="Login"></p>
