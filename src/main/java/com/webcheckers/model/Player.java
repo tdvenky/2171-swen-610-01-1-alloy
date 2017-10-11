@@ -7,7 +7,7 @@ public class Player {
     private String playerName;
     private color playerColor;
     public enum color {
-        RED, White
+        RED, WHITE
     }
     public Player(String playerName,color color){
         this.playerName = playerName;
