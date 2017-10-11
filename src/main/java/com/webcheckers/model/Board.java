@@ -29,7 +29,7 @@ public class Board implements Iterable {
         row.add( new Row(6));
         row.add( new Row(7));
 
-        System.out.println("Board "+ row.size());
+        System.out.println("Board is created:"+ row.size());
 
 
         return row.iterator();

@@ -19,8 +19,8 @@ public class GameController implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 
-        Player player = new Player("khalid", Player.color.RED);
-        Player opponetPlayer = new Player("abood", Player.color.White);
+        Player player = new Player("kritin", Player.color.White);
+        Player opponetPlayer = new Player("khalid", Player.color.RED);
         Board board = new Board();
         Boolean isMyTurn = true;
         message message = new message(" welocme ", com.webcheckers.model.message.Type.info);
