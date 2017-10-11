@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <meta http-equiv="refresh" content="10">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -13,8 +12,14 @@
       </div>
 
     <p align="center">Login to Web Checkers</p>
+      <#if loginPlayers??>
+          <#list loginPlayers as player>
+             <p>${player.playerName}</p>
+          </#list>
+      </#if>
 
-    <section class="container">
+
+      <section class="container">
         <div class="login">
           <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>

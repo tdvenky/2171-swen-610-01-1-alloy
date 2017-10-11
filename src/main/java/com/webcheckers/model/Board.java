@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.sun.tools.classfile.TypeAnnotation;
 import com.webcheckers.model.Row;
 
 import java.lang.Iterable;
@@ -12,7 +13,6 @@ public class Board implements Iterable {
    // public Row[] row = new Row[8];
     //  Row row;
     public Board(){
-
 
 
 

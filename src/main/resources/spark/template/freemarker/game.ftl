@@ -110,8 +110,7 @@
                               <td data-cell="${space.cellIdx}"
                                 <#if space.isValid() >
                                   class="Space"
-                                </#if>
-                              >
+                                </#if>>
                                 <#if space.piece??>
                                     <div class="Piece"
                                          id="piece-${row.index}-${space.cellIdx}"
