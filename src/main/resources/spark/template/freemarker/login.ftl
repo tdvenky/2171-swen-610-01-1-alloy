@@ -12,11 +12,10 @@
         <h1 align="center">Welcome to the world of online Checkers</h1>
       </div>
 
-    <p align="center">Let's play Web Checkers</p>
+    <p align="center">Login to Web Checkers</p>
 
     <section class="container">
-        <div class="home">
-            <button>Start Game</button>
+        <div class="login">
           <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
             <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
