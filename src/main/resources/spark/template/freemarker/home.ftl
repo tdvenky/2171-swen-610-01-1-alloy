@@ -11,7 +11,6 @@
         <h1 align="center">Welcome to the world of online Checkers</h1>
       </div>
 
-<<<<<<< HEAD
     <p align="center">Login to Web Checkers</p>
       <#if loginPlayers??>
           <#list loginPlayers as player>
@@ -22,13 +21,11 @@
 
       <section class="container">
         <div class="login">
-=======
     <p align="center">Let's play Web Checkers</p>
 
     <section class="container">
         <div class="home">
             <button>Start Game</button>
->>>>>>> e91ff59bac406266e67248e3fcb11cb5228be2eb
           <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
             <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
@@ -42,4 +39,3 @@
   </div>
 </body>
 </html>
-home.ftl

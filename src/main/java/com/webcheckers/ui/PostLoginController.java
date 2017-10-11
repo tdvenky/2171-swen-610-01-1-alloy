@@ -27,17 +27,14 @@ public class PostLoginController implements TemplateViewRoute {
     }
     @Override
     public ModelAndView handle(Request request, Response response) {
-     //  Map<String, Object> vm = new HashMap<>();
+      Map<String, Object> vm = new HashMap<>();
 
-<<<<<<< HEAD
         String name = request.queryParams("login");
         gameCenter.loginPlayers.add(new Player(name, Player.color.RED));
        // System.out.println(gameCenter.userGame.values());
         response.redirect(WebServer.GAME_URL);
-=======
         String username = request.queryParams("login");
         String password = request.queryParams("password");
->>>>>>> e91ff59bac406266e67248e3fcb11cb5228be2eb
 
         if(username.equals("venkatesh") && password.equals("venkatesh") ||
                 username.equals("khalid") && password.equals("khalid") ||
