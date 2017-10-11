@@ -15,19 +15,32 @@
     <p align="center">Let's play Web Checkers</p>
 
     <section class="container">
-        <div class="home">
-            <button>Start Game</button>
-          <form method="post" action="./login">
-            <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
-            <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
-          <#if errorMessage??>
-              <p align ="center"> ${errorMessage}</p>
-          </#if>
-            <p align="center" class="submit"><input type="submit" name="commit" value="Login"></p>
-          </form>
+        <table id="allUserNameTable" cellpadding="20px">
+            <tr>
+                <td><button type="button" align="center" id="startButton" style="font-size: larger">Start Game</button></td>
+                <td>
+                    <table border="0.5" id="allUserNames">
+                        <tr>
+                            <th>Logged in players</th>
+                        </tr>
+                        <tr>
+                            <td>Venkatesh</td>
+                        </tr>
+                        <tr>
+                            <td>Khalid</td>
+                        </tr>
+                        <tr>
+                            <td>Omar</td>
+                        </tr>
+                        <tr>
+                            <td>Kritin</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
         </div>
       </section>
   </div>
 </body>
 </html>
-home.ftl
