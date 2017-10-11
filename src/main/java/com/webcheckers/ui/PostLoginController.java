@@ -29,14 +29,29 @@ public class PostLoginController implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
      //  Map<String, Object> vm = new HashMap<>();
 
+<<<<<<< HEAD
         String name = request.queryParams("login");
         gameCenter.loginPlayers.add(new Player(name, Player.color.RED));
        // System.out.println(gameCenter.userGame.values());
         response.redirect(WebServer.GAME_URL);
+=======
+        String username = request.queryParams("login");
+        String password = request.queryParams("password");
+>>>>>>> e91ff59bac406266e67248e3fcb11cb5228be2eb
+
+        if(username.equals("venkatesh") && password.equals("venkatesh") ||
+                username.equals("khalid") && password.equals("khalid") ||
+                username.equals("omar") && password.equals("omar") ||
+                username.equals("kritin") && password.equals("kritin")) {
+            response.redirect(WebServer.GAME_URL);
+        } else {
+            vm.put("title", "Welcome!");
+            vm.put("errorMessage", "Invalid credentials");
+        }
 
 
 
-        return null;
+        return new ModelAndView(vm, "home.ftl");
     }
 
 }

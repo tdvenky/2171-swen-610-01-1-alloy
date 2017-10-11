@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta http-equiv="refresh" content="10">
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
@@ -11,24 +12,10 @@
         <h1 align="center">Welcome to the world of online Checkers</h1>
       </div>
 
-<<<<<<< HEAD
     <p align="center">Login to Web Checkers</p>
-      <#if loginPlayers??>
-          <#list loginPlayers as player>
-             <p>${player.playerName}</p>
-          </#list>
-      </#if>
-
-
-      <section class="container">
-        <div class="login">
-=======
-    <p align="center">Let's play Web Checkers</p>
 
     <section class="container">
-        <div class="home">
-            <button>Start Game</button>
->>>>>>> e91ff59bac406266e67248e3fcb11cb5228be2eb
+        <div class="login">
           <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
             <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>

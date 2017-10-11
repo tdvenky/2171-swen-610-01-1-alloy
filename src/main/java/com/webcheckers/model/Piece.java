@@ -13,7 +13,7 @@ public class Piece {
     private Type type;
     private Color color;
     public enum Type {
-        SINGLE, KING
+        SINGLE, KING  //king will be created after a coin reaches the opponent ends
     }
     public enum Color {
         RED, WHITE
