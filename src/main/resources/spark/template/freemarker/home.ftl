@@ -19,6 +19,9 @@
           <form method="post" action="./login">
             <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
             <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
+          <#if errorMessage??>
+              <p align ="center"> ${errorMessage}</p>
+          </#if>
             <p align="center" class="submit"><input type="submit" name="commit" value="Login"></p>
           </form>
         </div>
