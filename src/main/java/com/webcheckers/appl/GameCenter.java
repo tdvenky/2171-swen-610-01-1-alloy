@@ -26,9 +26,10 @@ public class GameCenter {
    */
   public final static String GAME_ID = "game";
 
-  // Store the user wins and how many time the game is played linked with the user session id
   public List<Player> loginPlayers = new ArrayList<Player>();
 
+  public  Player player;
+  public  Player opponetPlayer;
 
 //
   // Attributes
@@ -72,4 +73,17 @@ public class GameCenter {
     }
   }
 
+  public boolean isUserTaken(String playerName) {
+
+    for(Player player : loginPlayers) {
+       if(player.getPlayerName().trim().equals(playerName.trim())) {
+         return true;
+      }
+    }
+    return false;
+  }
+
+  public int getNumberOfPlayers() {
+    return loginPlayers.size();
+  }
 }

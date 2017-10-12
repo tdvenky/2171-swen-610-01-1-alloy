@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-    <meta http-equiv="refresh" content="10">
-    <title>${title} | Web Checkers</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
@@ -16,9 +14,20 @@
 
     <section class="container">
         <div class="login">
-          <form method="post" action="./login">
-            <p align="center"><input type="text" name="login" value="" placeholder="Username"></p>
-            <p align="center"><input type="password" name="password" value="" placeholder="Password"></p>
+          <form method="post" action="./validateUsername">
+
+            <p align="center"><input type="text" name="login" value=" <#if playNmae??>${playNmae}</#if>" placeholder="Username"></p>
+            <p align="center">
+            <#if loginPlayers??>
+                <select name="opponentList">
+                    <option value="opponent">Select an opponent</option>
+                          <#list loginPlayers as player>
+                              <option value=${player.playerName}>${player.playerName}</option>
+                          </#list>
+
+                </select>
+            </#if>
+            </p>
           <#if errorMessage??>
               <p align ="center"> ${errorMessage}</p>
           </#if>
@@ -29,4 +38,3 @@
   </div>
 </body>
 </html>
-home.ftl

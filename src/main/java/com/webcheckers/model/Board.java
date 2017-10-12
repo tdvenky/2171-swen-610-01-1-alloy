@@ -1,8 +1,5 @@
 package com.webcheckers.model;
 
-import com.sun.tools.classfile.TypeAnnotation;
-import com.webcheckers.model.Row;
-
 import java.lang.Iterable;
 import java.util.ArrayList;
 import java.util.Iterator;

@@ -127,8 +127,8 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new HomeController(gameCenter), templateEngine);
     get(GAME_URL, new GameController(gameCenter), templateEngine);
-    post("/login", new PostLoginController(gameCenter), templateEngine);
-
+   post("/validateUsername", new ValidateLoginController(gameCenter), templateEngine);
+    get("/login", new GetLoginController(gameCenter), templateEngine);
     post("/submitTurn", new submitTurnController(), templateEngine);
     post("/checkTurn", new GameController(gameCenter), templateEngine);
     post("/validateMove", new GameController(gameCenter), templateEngine);

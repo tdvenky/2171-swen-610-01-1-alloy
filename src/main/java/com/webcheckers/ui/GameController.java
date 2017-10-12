@@ -29,10 +29,10 @@ public class GameController implements TemplateViewRoute {
 
 
 
-        Player player = new Player("kritin", Player.color.WHITE);
-        Player opponetPlayer = new Player("khalid", Player.color.RED);
+        Player player = gameCenter.player;
+        Player opponetPlayer =  gameCenter.opponetPlayer;
         Board board = new Board();
-        Boolean isMyTurn = false;
+        Boolean isMyTurn = true;
         message message = new message("", com.webcheckers.model.message.Type.info);
         vm.put("title", "welcome");
         vm.put("currentPlayer", player);

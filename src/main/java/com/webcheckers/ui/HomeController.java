@@ -37,7 +37,6 @@ public class HomeController implements TemplateViewRoute {
     // start building the View-Model
     final Map<String, Object> vm = new HashMap<>();
     if (gameCenter.loginPlayers.size()>0){
-      System.out.println("print");
       vm.put("loginPlayers",gameCenter.loginPlayers );
 
     }
