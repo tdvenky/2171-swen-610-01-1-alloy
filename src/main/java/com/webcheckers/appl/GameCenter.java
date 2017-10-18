@@ -2,6 +2,7 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Player;
 import com.webcheckers.model.Row;
+import com.webcheckers.model.webcheckersGame;
 import spark.Session;
 
 import java.util.*;
@@ -27,6 +28,8 @@ public class GameCenter {
   public final static String GAME_ID = "game";
 
   public List<Player> loginPlayers = new ArrayList<Player>();
+
+  private List<webcheckersGame> games = new ArrayList<webcheckersGame>();
 
   public  Player player;
   public  Player opponetPlayer;
