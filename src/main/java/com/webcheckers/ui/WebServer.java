@@ -3,6 +3,10 @@ package com.webcheckers.ui;
 import static spark.Spark.*;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.ui.Registration.GetRegisterController;
+import com.webcheckers.ui.Registration.PostRegisterController;
+import com.webcheckers.ui.Signin.GetLoginController;
+import com.webcheckers.ui.Signin.PostSigninController;
 import spark.TemplateEngine;
 
 
@@ -127,13 +131,21 @@ public class WebServer {
     // Shows the Checkers game Home page.
     get(HOME_URL, new HomeController(gameCenter), templateEngine);
     get(GAME_URL, new GameController(gameCenter), templateEngine);
-   post("/validateUsername", new ValidateLoginController(gameCenter), templateEngine);
-    get("/login", new GetLoginController(gameCenter), templateEngine);
-    post("/submitTurn", new submitTurnController(), templateEngine);
-    post("/checkTurn", new GameController(gameCenter), templateEngine);
-    post("/validateMove", new GameController(gameCenter), templateEngine);
+
+      post("/register", new PostRegisterController(gameCenter), templateEngine);
+
+      get("/register", new GetRegisterController(), templateEngine);
+
+      get("/signin", new GetLoginController(), templateEngine);
+      post("/signin", new PostSigninController(gameCenter),templateEngine);
+
+    post("/submitTurn", new PostSubmitTurnController(gameCenter), JsonUtils.json());
+
+    post("/validateMove", new PostValidateMoveController(gameCenter), JsonUtils.json());
+
     post("/backupMove", new GameController(gameCenter), templateEngine);
-    post("/submitTurn", new GameController(gameCenter), templateEngine);
+
+    post("/checkTurn", new PostCheckTurnController(gameCenter), JsonUtils.json());
 
 
   }

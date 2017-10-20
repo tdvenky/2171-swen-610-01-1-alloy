@@ -14,6 +14,12 @@ public class Position {
     private int cell;
 
     Position(int row,int cell ){
+        this.row = row;
+        this.cell = cell;
+    }
 
+    @Override
+    public String toString() {
+        return  "row "+row+"  -----"+" cell  "+cell;
     }
 }

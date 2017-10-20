@@ -4,16 +4,21 @@ package com.webcheckers.ui;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
 
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.message;
+import com.webcheckers.model.webcheckersGame;
 import spark.*;
+
+import static spark.Spark.halt;
 
 
 public class GameController implements TemplateViewRoute {
     private final GameCenter gameCenter;
+    private  webcheckersGame game ;
 
 
     GameController(final GameCenter gameCenter) {
@@ -28,21 +33,54 @@ public class GameController implements TemplateViewRoute {
         Map<String, Object> vm = new HashMap<>();
 
 
+        String playerOne = request.session().attribute("playerName");
+        String playerOppnot = request.queryParams("OpponetPlayer");
 
-        Player player = gameCenter.player;
-        Player opponetPlayer =  gameCenter.opponetPlayer;
-        Board board = new Board();
-        Boolean isMyTurn = true;
-        message message = new message("", com.webcheckers.model.message.Type.info);
-        vm.put("title", "welcome");
-        vm.put("currentPlayer", player);
-        vm.put("playerName", player.getPlayerName());
-        vm.put("playerColor", player.getPlayerColor());
-        vm.put("opponentName", opponetPlayer.getPlayerName());
-        vm.put("opponentColor", opponetPlayer.getPlayerColor());
-        vm.put("isMyTurn", isMyTurn);
-        vm.put("message", message);
-        vm.put("board", board);
+        System.out.println("playerOne  "+playerOne);
+        System.out.println("playerOppnot  "+playerOppnot);
+
+        if (playerOne != null && playerOppnot != null){
+
+            if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Player.color.RED),new Player(playerOppnot, Player.color.WHITE))){
+
+                    game = gameCenter.getGameBy(playerOne+playerOppnot);
+                    if(game == null){
+                        game = gameCenter.getGameBy(playerOppnot+playerOne);
+
+                    }
+                System.out.println("game  "+game);
+
+                vm.put("title", "welcome");
+              //  vm.put("currentPlayerName", game.currentPlayerName);
+       //         vm.put("currentPlayerName", game.getPlayerOne());
+
+                if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)){
+                    vm.put("playerName",  game.getPlayerOne().getPlayerName());
+                    vm.put("playerColor", game.getPlayerOne().getPlayerColor());
+
+                    vm.put("opponentName", game.getOpponetPlayer().getPlayerName());
+                    vm.put("opponentColor", game.getOpponetPlayer().getPlayerColor());
+
+
+                }else {
+
+                    vm.put("playerName",  game.getOpponetPlayer().getPlayerName());
+                    vm.put("playerColor", game.getOpponetPlayer().getPlayerColor());
+
+                    vm.put("opponentName", game.getPlayerOne().getPlayerName());
+                    vm.put("opponentColor", game.getPlayerOne().getPlayerColor());
+
+
+                }
+
+                vm.put("isMyTurn", game.isPlayerTurn());
+                vm.put("message", game.getMessage());
+                vm.put("board", game.getBoard());
+
+              }
+        }else {
+
+        }
 
 
         return new ModelAndView(vm, "./game.ftl");

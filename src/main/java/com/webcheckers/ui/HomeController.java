@@ -31,38 +31,37 @@ public class HomeController implements TemplateViewRoute {
   public ModelAndView handle(Request request, Response response) {
 
     // retrieve the HTTP session
-//    final Session httpSession = request.session();
-
+  final Session httpSession = request.session();
 
     // start building the View-Model
     final Map<String, Object> vm = new HashMap<>();
-    if (gameCenter.loginPlayers.size()>0){
-      vm.put("loginPlayers",gameCenter.loginPlayers );
+    if (gameCenter.playersList.size()>0){
+      vm.put("playersList",gameCenter.playersList );
+
+    }
+
+    if(httpSession.isNew()){
+      response.redirect("/signin");
+      halt();
+      return null;
+    }
+
+
+    if(gameCenter.playerbusyPlaying(httpSession.attribute("playerName")))
+    {
+      String OpponetPlayer = gameCenter.getOpponetplayerFromPairedList(httpSession.attribute("playerName"));
+        response.redirect("/game?OpponetPlayer="+OpponetPlayer);
+        halt();
+        return null;
 
     }
 
     vm.put("title", "Welcome!");
+    vm.put("playerName",httpSession.attribute("playerName"));
+    vm.put("playersList",gameCenter.playersList);
+    System.out.println("playerName"+httpSession.attribute("playerName"));
 
 
-//    // if this is a brand new browser session
-//    if (httpSession.isNew()) {
-//      // render the Game Form viewc
-//      // report application-wide game statistics
-//
-//      System.out.println(gameCenter.userGame.values());
-//
-//      //LOG.fine("New Session/User created: ");
-//
-//      //vm.put(NEW_SESSION_ATTR, true);
-//    }
-//    else {
-//      // there is a game already being played
-//      // so redirect the user to the Game view
-//
-//      response.redirect(WebServer.GAME_URL);
-//      halt();
-//      return null;
-//    }
     return new ModelAndView(vm, "home.ftl");
 
   }

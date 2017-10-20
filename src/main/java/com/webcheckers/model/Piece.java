@@ -10,6 +10,10 @@ public class Piece {
         return color;
     }
 
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     private Type type;
     private Color color;
     public enum Type {
