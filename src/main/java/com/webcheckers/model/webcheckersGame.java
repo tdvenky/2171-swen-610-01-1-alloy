@@ -131,6 +131,7 @@ public class webcheckersGame {
      *            - Given name to be found
      * @return - return boolean if the player is in the game or not
      */
+
     public boolean isExsit(String playerName)
     {
         return opponetPlayer.getPlayerName().equals(playerName) || playerOne.getPlayerName().equals(playerName);
@@ -143,6 +144,8 @@ public class webcheckersGame {
           }
           return opponetPlayer;
     }
+
+    // TODO: 10/20/17 how to set the cureent player. who request the game will be frist
     public boolean isTurn(Player player)
     {
         if (playerOne.getPlayerName().equals(player.getPlayerName()) && playerTurn)
