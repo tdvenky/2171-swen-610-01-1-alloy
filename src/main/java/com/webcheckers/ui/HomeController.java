@@ -7,7 +7,6 @@ import com.webcheckers.appl.GameCenter;
 import spark.*;
 
 import java.util.Objects;
-import java.util.logging.Logger;
 
 import static spark.Spark.halt;
 
@@ -47,7 +46,7 @@ public class HomeController implements TemplateViewRoute {
     }
 
 
-    if(gameCenter.playerbusyPlaying(httpSession.attribute("playerName")))
+    if(gameCenter.playerAlreadyPaired(httpSession.attribute("playerName")))
     {
       String OpponetPlayer = gameCenter.getOpponetplayerFromPairedList(httpSession.attribute("playerName"));
         response.redirect("/game?OpponetPlayer="+OpponetPlayer);

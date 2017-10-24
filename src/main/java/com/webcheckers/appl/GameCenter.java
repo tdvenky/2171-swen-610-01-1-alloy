@@ -2,10 +2,7 @@ package com.webcheckers.appl;
 
 import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.Row;
 import com.webcheckers.model.webcheckersGame;
-import spark.Request;
-import spark.Response;
 import spark.Session;
 
 import java.util.*;
@@ -79,7 +76,7 @@ public class GameCenter {
   public boolean isGameCreated = false;
 
 
-public boolean playerbusyPlaying(String playerName){
+public boolean playerAlreadyPaired(String playerName){
 
   for(PairGameWithPlayers  gamesPaired : gamesPaired) {
     if(gamesPaired.getPlayerName().equalsIgnoreCase(playerName) || gamesPaired.getOpponetPlayer().equalsIgnoreCase(playerName)) {
@@ -119,7 +116,7 @@ public void PlayerNameAsSession(String name, Session session ){
 }
 
  public boolean makeMatchAndSetUpGame(Player player1,Player player2){
-    if (!playerbusyPlaying(player1.getPlayerName()) || !playerbusyPlaying(player2.getPlayerName()) )
+    if (!playerAlreadyPaired(player1.getPlayerName()) || !playerAlreadyPaired(player2.getPlayerName()) )
     {
       webcheckersGame game = new webcheckersGame(player1,player2, new Board());
       gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
@@ -184,6 +181,18 @@ public void PlayerNameAsSession(String name, Session session ){
     }
 
   }
+
+  public boolean removePlayer(String name){
+
+    if (isUserTaken(name)){
+      playersList.remove(name.trim());
+      return true;
+    }else {
+      return false;
+    }
+
+  }
+
   public boolean isUserTaken(String playerName) {
 
     for(String player : playersList) {
