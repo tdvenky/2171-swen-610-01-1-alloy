@@ -2,32 +2,30 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>${title} | Web Checkers</title>
-    <link rel="stylesheet" href="/css/registration.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/registration.css">
 </head>
 <body>
-<form action="/register" method="post">
+<div class="wrapper">
     <div class="container">
-        <label><b>Player Name</b></label>
-        <input type="text" placeholder="Enter Your Name" name="PlayerName" required>
+        <h1>Welcome to Web checkers Game</h1>
+    <#if isTaken??>
+        <label><b>Player Name is taken, try to enter different name  </b></label>
 
-
-        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-
-        <#if isTaken??>
-            <label><b>Player Name is taken, try to enter different name  </b></label>
-
-        </#if>
+    </#if>
     <#if NONAME??>
         <label><b>Player Name is not written   </b></label>
 
     </#if>
-        <div class="clearfix">
-            <button type="button"  class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn">Sign Up</button>
-        </div>
-        <script></script>
+        <form action="/register" method="post">
+
+            <input type="text" required name="PlayerName"  placeholder="Username">
+            <button type="submit" id="login-button">Sign Up</button>
+        </form>
     </div>
-</form>
+
+
+</div>
+
+
 </body>
 </html>
