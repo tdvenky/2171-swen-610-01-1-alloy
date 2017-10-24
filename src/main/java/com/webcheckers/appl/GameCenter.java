@@ -87,6 +87,14 @@ public boolean playerAlreadyPaired(String playerName){
 
 }
 
+  public GameCenter(){
+
+    registerPlayer("khalid");
+    registerPlayer("Venky");
+    registerPlayer("Ommar");
+    registerPlayer("kritten");
+
+  }
   public String getOpponetplayerFromPairedList(String playerName){
 
     for(PairGameWithPlayers  gamesPaired : gamesPaired) {

@@ -2,26 +2,30 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <title>${title} | Web Checkers</title>
-    <link rel="stylesheet" href="/css/registration.css">
-
+    <link rel="stylesheet" type="text/css" href="/css/registration.css">
 </head>
 <body>
-<form action="/signin" method="post">
+<div class="wrapper">
     <div class="container">
-        <label><b>Player Name</b></label>
-        <input type="text" placeholder="Enter Your Name" name="PlayerName" required>
+        <h1>Welcome to Web checkers Game</h1>
+    <#if noExistUser??>
 
-            <#if noExistUser??>
 
-                <label><b> not exist, try to enter anther name or register  <a href="/register">Sign Up</a>    </b></label>
 
-            </#if>
-        <div class="clearfix">
-            <button type="button"  class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn">Sign In</button>
-        </div>
-        <script></script>
+
+    </#if>
+        <form action="/signin" method="post">
+
+            <input type="text" name="PlayerName"  placeholder="Username">
+            <h4> Try to enter different Name or <br> You can  <a href='/register'>Sign Up</a> </h4>
+
+            <button type="submit" required id="login-button">Login</button>
+        </form>
     </div>
-</form>
+
+
+</div>
+
+
 </body>
 </html>
