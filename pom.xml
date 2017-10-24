@@ -100,13 +100,22 @@
           </arguments>
         </configuration>
       </plugin>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c76b117ea9371c26ccc06e864c457d998f65c939
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.8</version>
         <configuration>
+<<<<<<< HEAD
             <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
             <dataFile>/target/coverage-reports/jacoco-unit.exec</dataFile>
+=======
+          <destfile>/target/coverage-reports/jacoco-unit.exec</destfile>
+          <datafile>/target/coverage-reports/jacoco-unit.exec</datafile>
+>>>>>>> c76b117ea9371c26ccc06e864c457d998f65c939
         </configuration>
         <executions>
           <execution>

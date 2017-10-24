@@ -4,16 +4,12 @@ package com.webcheckers.ui;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.logging.Level;
 
 import com.webcheckers.appl.GameCenter;
-import com.webcheckers.model.Board;
 import com.webcheckers.model.Player;
-import com.webcheckers.model.message;
 import com.webcheckers.model.webcheckersGame;
 import spark.*;
 
-import static spark.Spark.halt;
 
 
 public class GameController implements TemplateViewRoute {

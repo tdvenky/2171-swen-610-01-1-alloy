@@ -27,15 +27,19 @@ public class PostSigninController implements  TemplateViewRoute {
         final String playerNameStr = request.queryParams(PLAYER_ATTR);
         vm.put("title", "Sign In");
 
-        if (gameCenter.isUserTaken(playerNameStr)) {
-            gameCenter.PlayerNameAsSession(playerNameStr, request.session());
+        if (!playerNameStr.isEmpty() || playerNameStr!=null) {
+            if (gameCenter.isUserTaken(playerNameStr)) {
+                gameCenter.PlayerNameAsSession(playerNameStr, request.session());
 
-            response.redirect("/");
-            halt();
-            return null;
-        } else {
-            vm.put(NO_EXIST_ATTR, "No user add try again");
+                response.redirect("/");
+                halt();
+                return null;
+            } else {
+                vm.put(NO_EXIST_ATTR, "No user add try again");
+
+            }
         }
+
         return new ModelAndView(vm,"signin.ftl");
     }
 

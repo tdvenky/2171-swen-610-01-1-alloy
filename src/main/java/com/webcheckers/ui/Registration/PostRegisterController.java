@@ -25,6 +25,7 @@ public class PostRegisterController implements TemplateViewRoute {
         final Map<String, Object> vm = new HashMap<>();
         final String playerNameStr = request.queryParams(PLAYER_ATTR);
         vm.put("title", "");
+        if (!playerNameStr.isEmpty() || playerNameStr!=null) {
 
             if (gameCenter.registerPlayer(playerNameStr)) {
 
@@ -35,6 +36,7 @@ public class PostRegisterController implements TemplateViewRoute {
             } else {
                 vm.put(ISTAKEN_ATTR, "is taken");
             }
+        }
 
         return new ModelAndView(vm, "Registration.ftl");
     }

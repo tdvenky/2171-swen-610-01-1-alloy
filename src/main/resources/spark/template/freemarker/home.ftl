@@ -3,53 +3,58 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
     <meta http-equiv="refresh" content="10">
     <title>${title} | Web Checkers</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/home.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/prettyPhoto.css" rel="stylesheet">
+    <link href="css/style1.css" rel="stylesheet">
+    <link href="css/responsive.css" rel="stylesheet">
 </head>
 <body>
-<div class="page">
-    <div class="navigation">
-        <a href="/"><#if playerName??>${playerName}'s<#else>my</#if> home</a>
-    <#if playerName??>
-        <a href="/signout">Sign Out</a>
-    </#if>
-        <a href="/signin">Sign In</a>
-
-        <a href="/register">Sign Up</a>
-    </div>
-
-    <div class="body">
-        <h1 align="center">Welcome to the world of online Checkers</h1>
-    </div>
-
-    <section class="container">
-        <div class="login">
-            <p align="center">Let's play Web Checkers</p>
-
-            <section class="container">
-                <table id="allUserNameTable" cellpadding="20px">
-                    <tr>
-                        <td><form action="./login" method="get">
-                            <button type="submit" align="center" id="startButton" style="font-size: larger">Start Game</button>
-                        </form></td>
-                        <td>
-                            <table border="0.5" id="allUserNames">
-                            <#if playersList??>
-                                <tr>
-                                    <th>Logged in players</th>
-                                </tr>
-                                <tr>
-
-                                    <#list playersList as player>
-                                        <#if !(player == playerName )>
-                                        <td><a href="/game?OpponetPlayer=${player}">${player}</a></td>
-                                        </#if>
-                                    </#list>
-                                </tr>
-                            </#if>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+<div class="navbar">
+    <a href="#home">Home</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
 </div>
+
+<div class="main">
+    <div class="container">
+        <div class="skill-wrap clearfix">
+            <div class="center wow fadeInDown">
+                <h2>About <span>Gp.</span></h2>
+                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+            </div>
+
+            <div class="row">
+                <#if playersList??>
+                <#list playersList as player>
+                    <#if !(player == playerName) >
+                        <div class="col-sm-3">
+                            <div class="sinlge-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                                <div class="joomla-skill">
+                                    <p><em>${player}</em></p>
+                                    <p>Online</p>
+                                </div>
+                            </div>
+                        </div>
+                    </#if>
+
+
+                </#list>
+                </#if>
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+</div>
+<#--<#include "footer.ftl">-->
 </body>
 </html>
+

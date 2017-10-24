@@ -1,8 +1,6 @@
 package com.webcheckers.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class webcheckersGame {
@@ -20,17 +18,11 @@ public class webcheckersGame {
         return playerOne;
     }
 
-    public void setPlayerOne(Player playerOne) {
-        this.playerOne = playerOne;
-    }
 
     public Player getOpponetPlayer() {
         return opponetPlayer;
     }
 
-    public void setOpponetPlayer(Player opponetPlayer) {
-        this.opponetPlayer = opponetPlayer;
-    }
 
     public boolean isPlayerTurn() {
         return playerTurn;
