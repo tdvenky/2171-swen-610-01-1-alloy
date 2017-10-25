@@ -7,9 +7,7 @@ import com.webcheckers.model.webcheckersGame;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.TemplateViewRoute;
 
-import java.awt.*;
 import java.util.Objects;
 
 public class PostValidateMoveController implements  Route {
