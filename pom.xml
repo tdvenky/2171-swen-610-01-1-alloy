@@ -61,14 +61,6 @@
       <version>2.3.5</version>
       <scope>test</scope>
     </dependency>
-    <!-- Populate mockito from request -->
-
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>1.9.5</version>
-      <scope>test</scope>
-    </dependency>
 
     <dependency>
       <groupId>org.jacoco</groupId>
@@ -103,7 +95,7 @@
           </execution>
         </executions>
         <configuration>
-          <mainClass>webcheckers.Application</mainClass>
+          <mainClass>com.webcheckers.Application</mainClass>
           <arguments>
           </arguments>
         </configuration>
@@ -112,6 +104,27 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.8</version>
+        <configuration>
+            <destFile>target/coverage-reports/jacoco-unit.exec</destFile>
+            <dataFile>/target/coverage-reports/jacoco-unit.exec</dataFile>
+
+        </configuration>
+        <executions>
+          <execution>
+            <id>jacoco-initialize</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>jacoco-site</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
 
