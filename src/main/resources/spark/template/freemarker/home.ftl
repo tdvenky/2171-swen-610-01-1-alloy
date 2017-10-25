@@ -22,23 +22,24 @@
     <div class="container">
         <div class="skill-wrap clearfix">
             <div class="center wow fadeInDown">
-                <h2>About <span>Gp.</span></h2>
+                <h2>Player List </h2>
                 <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
             </div>
 
             <div class="row">
                 <#if playersList??>
                 <#list playersList as player>
-                    <#if !(player == playerName) >
+
                         <div class="col-sm-3">
                             <div class="sinlge-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                                 <div class="joomla-skill">
                                     <p><em>${player}</em></p>
-                                    <p>Online</p>
+                                    <p><a href="/game?OpponetPlayer=${player}">click to play</a></p>
                                 </div>
                             </div>
                         </div>
-                    </#if>
+
+
 
 
                 </#list>
