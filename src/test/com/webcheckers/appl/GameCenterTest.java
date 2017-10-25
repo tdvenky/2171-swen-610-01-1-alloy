@@ -15,7 +15,7 @@ public class GameCenterTest {
         Player player1Test= new Player("james", Player.color.RED);
         Player player2Test= new Player("xander", Player.color.WHITE);
 
-      assertTrue(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test));
+      assertTrue(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //testing for player
 
 
     }
