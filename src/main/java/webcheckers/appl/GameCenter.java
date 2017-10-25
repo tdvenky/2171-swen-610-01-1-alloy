@@ -68,7 +68,7 @@ public class GameCenter {
 
   private List<webcheckersGame> games = new ArrayList<webcheckersGame>();
 
-  public static List<PairGameWithPlayers> gamesPaired = new ArrayList<PairGameWithPlayers>();
+  private List<PairGameWithPlayers> gamesPaired = new ArrayList<PairGameWithPlayers>();
 
   public  Player player;
   public  Player opponetPlayer;
@@ -92,11 +92,9 @@ public boolean playerAlreadyPaired(String playerName){
     registerPlayer("khalid");
     registerPlayer("Venky");
     registerPlayer("Ommar");
-    registerPlayer("kritin");
+    registerPlayer("kritten");
 
   }
-
-
   public String getOpponetplayerFromPairedList(String playerName){
 
     for(PairGameWithPlayers  gamesPaired : gamesPaired) {
@@ -120,9 +118,6 @@ public void PlayerNameAsSession(String name, Session session ){
  public boolean makeMatchAndSetUpGame(Player player1,Player player2){
     if (!playerAlreadyPaired(player1.getPlayerName()) && !playerAlreadyPaired(player2.getPlayerName()) )
     {
-      if (player1.getPlayerName().equalsIgnoreCase(player2.getPlayerName()) ){
-        return false;
-      }
       webcheckersGame game = new webcheckersGame(player1,player2, new Board());
         game.currentPlayerName = player1.getPlayerName();
       gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
