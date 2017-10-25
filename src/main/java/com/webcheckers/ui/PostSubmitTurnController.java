@@ -5,7 +5,6 @@ import com.webcheckers.model.webcheckersGame;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.TemplateViewRoute;
 
 import java.util.Objects;
 
