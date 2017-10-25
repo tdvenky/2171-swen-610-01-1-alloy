@@ -1,9 +1,8 @@
-package com.webcheckers.ui;
+package webcheckers.ui;
 
 import webcheckers.appl.GameCenter;
 import org.junit.Test;
 import spark.TemplateEngine;
-import webcheckers.ui.WebServer;
 
 import static org.mockito.Mockito.mock;
 

@@ -1,15 +1,13 @@
-package com.webcheckers.model;
+package webcheckers.model;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import webcheckers.model.Move;
-import webcheckers.model.Position;
 
 import static org.junit.Assert.*;
 
 public class MoveTest {
-    Position stratMove;
+    Position  stratMove;
     Position  endMove;
     Move Cut;
     @Before
