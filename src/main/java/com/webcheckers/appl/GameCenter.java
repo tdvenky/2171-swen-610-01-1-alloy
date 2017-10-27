@@ -122,7 +122,7 @@ public void PlayerNameAsSession(String name, Session session ){
        return false;
      }
       webcheckersGame game = new webcheckersGame(player1,player2, new Board());
-     game.currentPlayerName = player1.getPlayerName();
+      game.currentPlayer = player1;
       gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
       return true;
     }else if (ArePlayersInSameGame(player1.getPlayerName(),player2.getPlayerName())) {

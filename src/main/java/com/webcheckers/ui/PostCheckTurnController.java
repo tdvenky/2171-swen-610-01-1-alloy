@@ -25,6 +25,6 @@ public class PostCheckTurnController implements Route {
     public Object handle(Request request, Response response) {
         game = gameCenter.getGame(request.session());
 
-        return game == null || game.isTurn(game.playerObjectFor(game.currentPlayerName));
+        return game == null || game.isTurn(game.playerObjectFor(game.currentPlayer.getPlayerName()));
     }
 }

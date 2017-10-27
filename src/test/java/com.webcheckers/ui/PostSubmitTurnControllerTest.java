@@ -1,23 +1,21 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Player;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import spark.Request;
 import spark.Response;
 import spark.Session;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class PostSubmitTurnControllerTest {
     private GameCenter gamecenter = new GameCenter();
 
-    private static final Player PLAYER1 = new Player("test1", Player.color.RED);
-    private static final Player PLAYER2 = new Player("test2", Player.color.WHITE);
+    private static final Player PLAYER1 = new Player("test1", Color.RED);
+    private static final Player PLAYER2 = new Player("test2", Color.WHITE);
     private Session session1 = mock(Session.class);
 
     private Request request = mock(Request.class);

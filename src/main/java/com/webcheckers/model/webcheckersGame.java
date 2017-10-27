@@ -12,7 +12,7 @@ public class webcheckersGame {
     private  Player playerOne;
     private  Player opponetPlayer;
     private boolean playerTurn = true;
-    public String currentPlayerName ;
+    public Player currentPlayer;
 
     public Player getPlayerOne() {
         return playerOne;
@@ -107,11 +107,11 @@ public class webcheckersGame {
     {
         if (playerTurn)
         {
-            currentPlayerName = opponetPlayer.getPlayerName();
+            currentPlayer = opponetPlayer;
            return playerTurn = false;
         }
 
-        currentPlayerName = playerOne.getPlayerName();
+        currentPlayer = playerOne;
 
         return playerTurn= true;
     }
@@ -123,6 +123,7 @@ public class webcheckersGame {
      *            - Given name to be found
      * @return - return boolean if the player is in the game or not
      */
+
 
     public boolean isExsit(String playerName)
     {
@@ -137,6 +138,14 @@ public class webcheckersGame {
           return opponetPlayer;
     }
 
+    public boolean makeTheMove(Move move){
+
+        board.row.get(move.getStart().getRow()).space.get(move.getStart().getCell()).setPiece(null);
+
+
+        board.row.get(move.getEnd().getRow()).space.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE,currentPlayer.getPlayerColor()));
+        return true;
+    }
     // TODO: 10/20/17 how to set the cureent player. who request the game will be frist
     public boolean isTurn(Player player)
     {

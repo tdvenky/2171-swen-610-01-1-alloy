@@ -19,10 +19,8 @@ public class Piece {
     public enum Type {
         SINGLE, KING  //king will be created after a coin reaches the opponent ends
     }
-    public enum Color {
-        RED, WHITE
-    }
-    Piece(Type type,Color color){
+
+    public Piece(Type type, Color color){
         this.type = type;
         this.color = color;
 

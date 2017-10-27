@@ -6,10 +6,12 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Player;
 import com.webcheckers.model.webcheckersGame;
 import spark.*;
 
+import static spark.Spark.halt;
 
 
 public class GameController implements TemplateViewRoute {
@@ -40,7 +42,7 @@ public class GameController implements TemplateViewRoute {
         System.out.println("playerOppnot  "+playerOppnot);
         if (playerOne != null && playerOppnot != null){
 
-            if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Player.color.RED),new Player(playerOppnot, Player.color.WHITE))){
+            if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Color.RED),new Player(playerOppnot, Color.WHITE))){
 
                 game = gameCenter.getGameBy(playerOne+playerOppnot);
                 if(game == null){
@@ -50,8 +52,8 @@ public class GameController implements TemplateViewRoute {
                 System.out.println("game  "+game);
 
                 vm.put("title", "welcome");
-                //  vm.put("currentPlayerName", game.currentPlayerName);
-                //         vm.put("currentPlayerName", game.getPlayerOne());
+                //  vm.put("currentPlayer", game.currentPlayer);
+                //         vm.put("currentPlayer", game.getPlayerOne());
 
                 if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)){
                     vm.put("playerName",  game.getPlayerOne().getPlayerName());
@@ -72,7 +74,7 @@ public class GameController implements TemplateViewRoute {
 
                 }
 
-                if (game.currentPlayerName.equalsIgnoreCase(playerOne)){
+                if (game.currentPlayer.getPlayerName().equalsIgnoreCase(playerOne)){
                     vm.put("isMyTurn", true);
 
                 }else {
@@ -86,7 +88,8 @@ public class GameController implements TemplateViewRoute {
         }else {
 
             response.redirect("/");
-            
+            halt();
+            return null;
         }
 
 
