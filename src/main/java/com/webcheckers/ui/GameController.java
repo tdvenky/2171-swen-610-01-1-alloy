@@ -24,6 +24,7 @@ public class GameController implements TemplateViewRoute {
         this.gameCenter = gameCenter;
     }
 
+
     @Override
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
@@ -32,23 +33,25 @@ public class GameController implements TemplateViewRoute {
         String playerOne = request.session().attribute("playerName");
         String playerOppnot = request.queryParams("OpponetPlayer");
 
+
+
+
         System.out.println("playerOne  "+playerOne);
         System.out.println("playerOppnot  "+playerOppnot);
-
         if (playerOne != null && playerOppnot != null){
 
             if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Player.color.RED),new Player(playerOppnot, Player.color.WHITE))){
 
-                    game = gameCenter.getGameBy(playerOne+playerOppnot);
-                    if(game == null){
-                        game = gameCenter.getGameBy(playerOppnot+playerOne);
+                game = gameCenter.getGameBy(playerOne+playerOppnot);
+                if(game == null){
+                    game = gameCenter.getGameBy(playerOppnot+playerOne);
 
-                    }
+                }
                 System.out.println("game  "+game);
 
                 vm.put("title", "welcome");
-              //  vm.put("currentPlayerName", game.currentPlayerName);
-       //         vm.put("currentPlayerName", game.getPlayerOne());
+                //  vm.put("currentPlayerName", game.currentPlayerName);
+                //         vm.put("currentPlayerName", game.getPlayerOne());
 
                 if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)){
                     vm.put("playerName",  game.getPlayerOne().getPlayerName());
@@ -69,13 +72,21 @@ public class GameController implements TemplateViewRoute {
 
                 }
 
-                vm.put("isMyTurn", game.isPlayerTurn());
+                if (game.currentPlayerName.equalsIgnoreCase(playerOne)){
+                    vm.put("isMyTurn", true);
+
+                }else {
+                    vm.put("isMyTurn", false);
+
+                }
                 vm.put("message", game.getMessage());
                 vm.put("board", game.getBoard());
 
-              }
+            }
         }else {
 
+            response.redirect("/");
+            
         }
 
 

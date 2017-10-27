@@ -25,9 +25,7 @@ public class GameCenterTest {
         Player player2Test= new Player("xander", Player.color.WHITE);
 
         gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test);
-
-        assertFalse(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //already in the array who are playing the game.
-
+        assertTrue(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //already in the array who are playing the game.
 
     }
     @Test

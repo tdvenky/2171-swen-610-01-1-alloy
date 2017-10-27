@@ -116,9 +116,13 @@ public void PlayerNameAsSession(String name, Session session ){
 }
 
  public boolean makeMatchAndSetUpGame(Player player1,Player player2){
-    if (!playerAlreadyPaired(player1.getPlayerName()) || !playerAlreadyPaired(player2.getPlayerName()) )
-    {
+   if (!playerAlreadyPaired(player1.getPlayerName()) && !playerAlreadyPaired(player2.getPlayerName()) )
+   {
+     if (player1.getPlayerName().equalsIgnoreCase(player2.getPlayerName()) ){
+       return false;
+     }
       webcheckersGame game = new webcheckersGame(player1,player2, new Board());
+     game.currentPlayerName = player1.getPlayerName();
       gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
       return true;
     }else if (ArePlayersInSameGame(player1.getPlayerName(),player2.getPlayerName())) {
