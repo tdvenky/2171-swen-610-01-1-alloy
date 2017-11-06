@@ -179,9 +179,90 @@ public class webcheckersGame {
 
     }
 
+    /**
+     * Check if the move legal
+     *
+     * @param move - Given player name  d
+     * @return - return boolean if the player is turned
+     */
+    public boolean isValidMove(Move move) {
+
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+
+        Piece playerPiece = board.rows.get(startRow).spaces.get(startCol).getPiece();
 
 
-    // TODO: 10/20/17 how to set the cureent player. who request the game will be frist
+        if (playerPiece.getType() == Piece.Type.SINGLE) {
+
+            if (playerPiece.getColor() == Color.RED) {
+                System.out.println("single valid move.");
+                System.out.println("red");
+                System.out.println("getMoveMagnitude" + move.getMoveMagnitude());
+
+                if (move.getMoveMagnitude() == 1) {
+
+                    return singleMoveCheck(move, playerPiece.getColor());
+
+                }
+            } else if (playerPiece.getColor() == Color.WHITE) {
+                // regular move
+                if (move.getMoveMagnitude() == 1) {
+                    return singleMoveCheck(move, playerPiece.getColor());
+
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean singleForwardMove(Move move) {
+
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCol = move.getEnd().getCell();
+
+        if (((endRow == startRow + 1) && (endCol == startCol + 1)) || ((endRow == startRow + 1) && (endCol == startCol - 1))) {
+
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean singleBackwardMove(Move move) {
+
+        int startRow = move.getStart().getRow();
+        int startCol = move.getStart().getCell();
+        int endRow = move.getEnd().getRow();
+        int endCol = move.getEnd().getCell();
+
+        if (((endRow == startRow - 1) && (endCol == startCol + 1)) || ((endRow == startRow - 1) && (endCol == startCol - 1))) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean singleMoveCheck(Move move, Color color) {
+
+
+        if (color == Color.RED) {
+
+            return singleForwardMove(move);
+
+        } else if (color == Color.WHITE) {
+
+            return singleBackwardMove(move);
+
+        } else {
+            return false;
+        }
+    }
+
     public boolean isTurn(Player player)
     {
         if (playerOne.getPlayerName().equals(player.getPlayerName()) && playerTurn)

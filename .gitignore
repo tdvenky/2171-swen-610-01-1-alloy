@@ -19,3 +19,5 @@
 ############
 .idea/
 *.iml
+codeCoverage.txt
+logs1.txt
