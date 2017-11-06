@@ -61,6 +61,7 @@ public class GameController implements TemplateViewRoute {
 
                     vm.put("opponentName", game.getOpponetPlayer().getPlayerName());
                     vm.put("opponentColor", game.getOpponetPlayer().getPlayerColor());
+                    vm.put("rotate","rotate");
 
 
                 }else {

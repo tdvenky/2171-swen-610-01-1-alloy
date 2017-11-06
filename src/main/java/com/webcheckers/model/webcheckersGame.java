@@ -13,6 +13,7 @@ public class webcheckersGame {
     private  Player opponetPlayer;
     private boolean playerTurn = true;
     public static Player currentPlayer;
+    private Space removedSpace;
 
     public Player getPlayerOne() {
         return playerOne;
@@ -204,16 +205,61 @@ public class webcheckersGame {
 
                     return singleMoveCheck(move, playerPiece.getColor());
 
+                } else if (move.getMoveMagnitude() == 2) {  // Jump
+
+                    return jumpCheck(move, playerPiece.getColor());
                 }
             } else if (playerPiece.getColor() == Color.WHITE) {
+
+
                 // regular move
+
                 if (move.getMoveMagnitude() == 1) {
                     return singleMoveCheck(move, playerPiece.getColor());
 
+                } else if (move.getMoveMagnitude() == 2) { // Jump
+
+                    return jumpCheck(move, playerPiece.getColor());
+
+
                 }
+
+
             }
+
+
+        } else if (playerPiece.getType() == Piece.Type.KING) {
+
+            System.out.println("getMoveMagnitude   :  " + move.getMoveMagnitude());
+
+            if (move.getMoveMagnitude() == 1) { // singale move
+                if (singleForwardMove(move) || singleBackwardMove(move)) {
+
+
+                    return true;
+                } else {
+                    return false;
+                }
+
+
+            } else if (move.getMoveMagnitude() == 2) {
+
+                if (jumpForwardMove(move)) {
+
+                    return checkForOpponentForward(move);
+                }
+
+                if (jumpBackwardMove(move)) {
+                    return checkForOpponentBackWard(move);
+
+                }
+
+
+            }
+
         }
         return false;
+
     }
 
     private boolean singleForwardMove(Move move) {
@@ -280,7 +326,7 @@ public class webcheckersGame {
      * @param move
      * @return true if valid move else false
      */
-    private boolean jumpForwardMove(Move move) { //
+    private boolean jumpForwardMove(Move move) {
         if (((move.getEnd().getRow() == move.getStart().getRow() + 2) &&
                 (((move.getEnd().getCell() == move.getStart().getCell() + 2))
                         || (move.getEnd().getCell() == move.getStart().getCell() - 2)))) {
@@ -288,6 +334,71 @@ public class webcheckersGame {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private boolean checkForOpponentForward(Move move) {
+        int startCol = move.getStart().getCell();
+        int endCol = move.getEnd().getCell();
+        Space jumpForwardSpace;
+
+        if (startCol < endCol) {
+            jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() + 1);
+
+        } else {
+            jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() - 1);
+
+        }
+        if (jumpForwardSpace != null) {
+            if (currentPlayer.getPlayerColor() != jumpForwardSpace.getPiece().getColor()) {
+                removedSpace = jumpForwardSpace;
+
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkForOpponentBackWard(Move move) {
+
+        int startCol = move.getStart().getCell();
+        int endCol = move.getEnd().getCell();
+        Space space;
+
+        if (startCol < endCol) {
+            space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() + 1);
+
+        } else {
+            space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() - 1);
+
+        }
+
+
+        if (space != null) {
+            if (currentPlayer.getPlayerColor() != space.getPiece().getColor()) {
+                removedSpace = space;
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+
+    }
+
+
+    public void removePiece() {
+
+        if (removedSpace != null) {
+
+            System.out.println("r******************" + removedSpace.getCellIdx());
+            System.out.println("***************" + removedSpace.getPiece().getColor());
+
+            this.removedSpace.setPiece(null);
+            this.removedSpace = null;
+
         }
     }
 
@@ -315,7 +426,7 @@ public class webcheckersGame {
 
         if (color == Color.RED) {
             if (jumpForwardMove(move)) {
-                return true;  //khalid  handle this functionality. you need to check for opponent and return true if it is an opponent's piece and false if isn't.
+                return checkForOpponentForward(move);
 
             }
 
@@ -323,7 +434,7 @@ public class webcheckersGame {
         } else {
 
             if (jumpBackwardMove(move)) {
-                return true;  // same applies here.
+                return checkForOpponentBackWard(move);
             }
         }
         return false;

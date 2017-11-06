@@ -33,7 +33,7 @@ public class webcheckersGameTest {
         webcheckersGame.currentPlayer = player;
         Board board = new Board();
         Move move = new Move(position, position);
-        webcheckersGame.makeTheMove(move);
+        webcheckersGame0.makeTheMove(move);
         assertTrue(webcheckersGame0.isPlayerTurn());
         assertEquals(2, webcheckersGame0.getNumberCurrentPlayers());
     }

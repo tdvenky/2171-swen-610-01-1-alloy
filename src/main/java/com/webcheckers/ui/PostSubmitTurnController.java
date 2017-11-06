@@ -32,6 +32,7 @@ public class PostSubmitTurnController implements  Route {
             game = gameCenter.getGameBy("VENKYkhalid");
 
         }
+
         game.switchTurn();
         response.redirect("/game");
 

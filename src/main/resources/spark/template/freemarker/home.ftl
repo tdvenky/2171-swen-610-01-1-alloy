@@ -14,16 +14,14 @@
 <body>
 <div class="navbar">
     <a href="#home">Home</a>
-    <a href="#news">News</a>
-    <a href="#contact">Contact</a>
 </div>
 
 <div class="main">
     <div class="container">
         <div class="skill-wrap clearfix">
             <div class="center wow fadeInDown">
-                <h2>About <span>Gp.</span></h2>
-                <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut <br> et dolore magna aliqua. Ut enim ad minim veniam</p>
+                <h3>you login with : <#if playerName?? >${playerName}</#if></h3>
+                <h2>Available Player to play with: </h2>
             </div>
 
             <div class="row">

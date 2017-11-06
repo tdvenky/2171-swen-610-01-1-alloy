@@ -4,6 +4,7 @@
     <title>${title} | Web Checkers</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/game.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script>
         window.gameState = {
@@ -101,7 +102,7 @@
 
                 </div>
 
-                <div class="game-board">
+                <div class="game-board <#if rotate??>${rotate}</#if> ">
                     <table id="game-board">
                         <tbody>
                         <#list board.iterator() as row>
@@ -112,7 +113,7 @@
                                   class="Space"
                                 </#if>>
                                 <#if space.piece??>
-                                    <div class="Piece"
+                                    <div class="Piece <#if rotate??>${rotate}</#if>"
                                          id="piece-${row.index}-${space.cellIdx}"
                                          data-type="${space.piece.type}"
                                          data-color="${space.piece.color}">

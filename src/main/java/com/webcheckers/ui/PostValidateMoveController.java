@@ -30,15 +30,27 @@ public class PostValidateMoveController implements  Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        final Move move = JsonUtils.fromJson(request.body(), Move.class);
+
+        System.out.println(move.toString());
         game = gameCenter.getGameBy("khalidVENKY");
         if (game ==null){
             game = gameCenter.getGameBy("VENKYkhalid");
 
         }
 
-        final Move move = JsonUtils.fromJson(request.body(), Move.class);
-        game.makeTheMove(move);
-        System.out.println("Player move: " + request.attribute("currentPlayer")+"---- mocve :  "+ move.toString());
-        return new message("Other player has resigned, submit turn to end game.", message.Type.info);
+        if (game.isValidMove(move)){
+            game.makeTheMove(move);
+            game.removePiece();
+            System.out.println(game.currentPlayer.getPlayerColor());
+
+
+            return new message("Your move is legal .", message.Type.info);
+
+
+        }else {
+            return new message("Your move is illegal ", message.Type.error);
+
+        }
     }
 }
