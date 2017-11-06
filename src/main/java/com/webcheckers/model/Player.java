@@ -1,11 +1,10 @@
 package com.webcheckers.model;
-import com.webcheckers.model.Board;
 
 public class Player {
 
 
     private String playerName;
-    private color playerColor;
+    private Color playerColor;
 
     public status getPlayerStatus() {
         return playerStatus;
@@ -17,13 +16,11 @@ public class Player {
 
     private status playerStatus;
 
-    public enum color {
-        RED, WHITE
-    }
+
     public enum status {
         Playing, WatingForMatch
     }
-    public Player(String playerName,color color){
+    public Player(String playerName,Color color){
         this.playerName = playerName;
         this.playerColor = color;
         this.playerStatus = status.WatingForMatch;
@@ -32,7 +29,7 @@ public class Player {
         return playerName;
     }
 
-    public color getPlayerColor() {
+    public Color getPlayerColor() {
         return playerColor;
     }
 }

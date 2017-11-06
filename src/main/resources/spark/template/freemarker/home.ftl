@@ -29,12 +29,13 @@
             <div class="row">
                 <#if playersList??>
                 <#list playersList as player>
-                    <#if !(player == playerName) >
+                    <#if (player != playerName) >
                         <div class="col-sm-3">
                             <div class="sinlge-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
                                 <div class="joomla-skill">
                                     <p><em>${player}</em></p>
-                                    <p>Online</p>
+                                    <p><a href="/game?OpponetPlayer=${player}">click to play</a></p>
+
                                 </div>
                             </div>
                         </div>

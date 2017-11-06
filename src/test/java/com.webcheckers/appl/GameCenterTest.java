@@ -1,5 +1,6 @@
 package com.webcheckers.appl;
 
+import com.webcheckers.model.Color;
 import com.webcheckers.model.Player;
 import org.junit.Test;
 
@@ -9,8 +10,8 @@ public class GameCenterTest {
     @Test
     public void makeMatchAndSetUpGame() throws Exception {
         GameCenter gameCenterTest= new GameCenter();
-        Player player1Test= new Player("james", Player.color.RED);
-        Player player2Test= new Player("xander", Player.color.WHITE);
+        Player player1Test= new Player("james", Color.RED);
+        Player player2Test= new Player("xander", Color.WHITE);
 
         assertTrue(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //testing for player
 
@@ -21,13 +22,11 @@ public class GameCenterTest {
     @Test
     public void makeMatchAndSetUpGameFailed() throws Exception {
         GameCenter gameCenterTest= new GameCenter();
-        Player player1Test= new Player("james", Player.color.RED);
-        Player player2Test= new Player("xander", Player.color.WHITE);
+        Player player1Test= new Player("james", Color.RED);
+        Player player2Test= new Player("xander", Color.WHITE);
 
         gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test);
-
-        assertFalse(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //already in the array who are playing the game.
-
+        assertTrue(gameCenterTest.makeMatchAndSetUpGame(player1Test,player2Test)); //already in the array who are playing the game.
 
     }
     @Test

@@ -28,16 +28,8 @@ public class HomeController implements TemplateViewRoute {
 
   @Override
   public ModelAndView handle(Request request, Response response) {
+    final Session httpSession = request.session();
 
-    // retrieve the HTTP session
-  final Session httpSession = request.session();
-
-    // start building the View-Model
-    final Map<String, Object> vm = new HashMap<>();
-    if (gameCenter.playersList.size()>0){
-      vm.put("playersList",gameCenter.playersList );
-
-    }
 
     if(httpSession.isNew()){
       response.redirect("/signin");
@@ -46,19 +38,29 @@ public class HomeController implements TemplateViewRoute {
     }
 
 
-    if(gameCenter.playerAlreadyPaired(httpSession.attribute("playerName")))
-    {
-      String OpponetPlayer = gameCenter.getOpponetplayerFromPairedList(httpSession.attribute("playerName"));
-        response.redirect("/game?OpponetPlayer="+OpponetPlayer);
-        halt();
-        return null;
+    // start building the View-Model
+    final Map<String, Object> vm = new HashMap<>();
+
+    vm.put("title", "Welcome!");
+
+    // retrieve the HTTP session
+
+    if (gameCenter.playersList.size()>0){
+      vm.put("playersList",gameCenter.playersList );
 
     }
 
-    vm.put("title", "Welcome!");
     vm.put("playerName",httpSession.attribute("playerName"));
-    vm.put("playersList",gameCenter.playersList);
-    System.out.println("playerName"+httpSession.attribute("playerName"));
+    //check if the Player is linked?
+    if(gameCenter.playerAlreadyPaired(httpSession.attribute("playerName")))
+    {
+      String OpponetPlayer = gameCenter.getOpponetplayerFromPairedList(httpSession.attribute("playerName"));
+      response.redirect("/game?OpponetPlayer="+OpponetPlayer);
+      halt();
+      return null;
+
+    }
+
 
 
     return new ModelAndView(vm, "home.ftl");

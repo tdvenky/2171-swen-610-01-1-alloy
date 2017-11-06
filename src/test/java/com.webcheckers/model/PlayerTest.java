@@ -12,7 +12,7 @@ public class PlayerTest {
     @Before
     public void setUp() throws Exception {
 
-         playerUnderTest = new Player("testNmae", Player.color.RED);
+         playerUnderTest = new Player("testNmae", Color.RED);
 
     }
 
@@ -25,7 +25,7 @@ public class PlayerTest {
 
 
         assertEquals("","testNmae",playerUnderTest.getPlayerName());
-        assertEquals("", Player.color.RED,playerUnderTest.getPlayerColor());
+        assertEquals("", Color.RED,playerUnderTest.getPlayerColor());
 
 
     }
@@ -44,7 +44,7 @@ public class PlayerTest {
 
     @Test
     public void getPlayerColor() throws Exception {
-        assertEquals( Player.color.RED,playerUnderTest.getPlayerColor());
+        assertEquals( Color.RED,playerUnderTest.getPlayerColor());
 
     }
 

@@ -22,7 +22,11 @@ public class Space {
 
      private   boolean isValid = true;
 
-     private Piece piece;
+    public void setPiece(Piece piece) {
+        this.piece = piece;
+    }
+
+    private Piece piece;
   //  public List<Space> space = new ArrayList<Space>();
 
 

@@ -10,14 +10,12 @@ public class Board implements Iterable {
    // public Row[] row = new Row[8];
     //  Row row;
     public Board(){
-        row.add( new Row(0));
-        row.add( new Row(1));
-        row.add( new Row(2));
-        row.add( new Row(3));
-        row.add( new Row(4));
-        row.add( new Row(5));
-        row.add( new Row(6));
-        row.add( new Row(7));
+        // generate the row of board
+        for (int i = 0; i <8 ; i++) {
+            row.add( new Row(i));
+
+        }
+
 
 
 
@@ -25,9 +23,7 @@ public class Board implements Iterable {
 
     @Override
     public Iterator iterator() {
-
-//        System.out.println("Board is created:"+ row.size());
-
+        // Freemaker  can read the row list from html
 
         return row.iterator();
     }
