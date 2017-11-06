@@ -7,12 +7,12 @@ public class webcheckersGame {
     /**
      * Attributes
      */
-//    public List<Row> row = new ArrayList<Row>();
+//    public List<Row> rows = new ArrayList<Row>();
 
     private  Player playerOne;
     private  Player opponetPlayer;
     private boolean playerTurn = true;
-    public Player currentPlayer;
+    public static Player currentPlayer;
 
     public Player getPlayerOne() {
         return playerOne;
@@ -138,14 +138,49 @@ public class webcheckersGame {
           return opponetPlayer;
     }
 
-    public boolean makeTheMove(Move move){
+    /**
+     * the method will make the move depends on the move object. when the move reached the end of the board, it will become a king
+     * @param move - Accepted Move parameter, which was sent from Json
+     * @return - Void --
+     */
+    public void makeTheMove(Move move) {
+        Piece piece = null;
+        if (piece == null) {
+            piece = board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).getPiece();
 
-        board.row.get(move.getStart().getRow()).space.get(move.getStart().getCell()).setPiece(null);
+            board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).setPiece(null); // remove the piece from start portions
+
+            if (piece.getType() == Piece.Type.SINGLE) {
+                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE, currentPlayer.getPlayerColor())); // moved
+
+            } else {
+                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor())); // moved
+
+            }
+
+            // change the piece when it reaches 7 or 0 to be king
+            if (currentPlayer.getPlayerColor() == Color.RED && move.getEnd().getRow() == 7 && piece.getType() == Piece.Type.SINGLE) {
+
+                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
 
 
-        board.row.get(move.getEnd().getRow()).space.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE,currentPlayer.getPlayerColor()));
-        return true;
+            } else if (currentPlayer.getPlayerColor() == Color.WHITE && move.getEnd().getRow() == 0 & piece.getType() == Piece.Type.SINGLE) {
+
+                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
+
+
+            }
+
+
+        } else {
+            System.out.println("piece is null");
+        }
+
+
     }
+
+
+
     // TODO: 10/20/17 how to set the cureent player. who request the game will be frist
     public boolean isTurn(Player player)
     {

@@ -27,7 +27,7 @@ public class Space {
     }
 
     private Piece piece;
-  //  public List<Space> space = new ArrayList<Space>();
+  //  public List<Space> spaces = new ArrayList<Space>();
 
 
     Space(int cellIdx,boolean isValid,  Piece piece){

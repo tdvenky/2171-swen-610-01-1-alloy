@@ -20,6 +20,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return  "row "+row+"  -----"+" cell  "+cell;
+        return  "rows "+row+"  -----"+" cell  "+cell;
     }
 }

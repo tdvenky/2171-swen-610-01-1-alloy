@@ -6,13 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Board implements Iterable {
-   public List<Row> row = new ArrayList<Row>();
-   // public Row[] row = new Row[8];
-    //  Row row;
+   public List<Row> rows = new ArrayList<Row>();
+   // public Row[] rows = new Row[8];
+    //  Row rows;
     public Board(){
-        // generate the row of board
+        // generate the rows of board
         for (int i = 0; i <8 ; i++) {
-            row.add( new Row(i));
+            rows.add( new Row(i));
 
         }
 
@@ -23,9 +23,9 @@ public class Board implements Iterable {
 
     @Override
     public Iterator iterator() {
-        // Freemaker  can read the row list from html
+        // Freemaker  can read the rows list from html
 
-        return row.iterator();
+        return rows.iterator();
     }
 }
 
