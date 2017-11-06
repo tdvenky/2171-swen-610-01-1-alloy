@@ -273,6 +273,61 @@ public class webcheckersGame {
         return  false;
     }
 
+
+    /**
+     * to check for jumping location in the forward direction for a disc. Checking the location in terms of rows and columns.
+     * to check for red disc jump (which travels from row 0 to row 7) and king jump
+     * @param move
+     * @return true if valid move else false
      */
+    private boolean jumpForwardMove(Move move) { //
+        if (((move.getEnd().getRow() == move.getStart().getRow() + 2) &&
+                (((move.getEnd().getCell() == move.getStart().getCell() + 2))
+                        || (move.getEnd().getCell() == move.getStart().getCell() - 2)))) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * to jump in the backward direction. (for white coin which travels from row number 7 till row 0 and for the king jump)
+     * @param move
+     * @return true if valid jump else return false
+     */
+    private boolean jumpBackwardMove(Move move) {
+
+
+        if (((move.getEnd().getRow() == move.getStart().getRow() - 2) &&
+                (((move.getEnd().getCell() == move.getStart().getCell() - 2))
+                        || (move.getEnd().getCell() == move.getStart().getCell() + 2)))) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean jumpCheck(Move move, Color color) { //checking before jumping whether the opponent disc is placed or no.
+
+
+        if (color == Color.RED) {
+            if (jumpForwardMove(move)) {
+                return true;  //khalid  handle this functionality. you need to check for opponent and return true if it is an opponent's piece and false if isn't.
+
+            }
+
+
+        } else {
+
+            if (jumpBackwardMove(move)) {
+                return true;  // same applies here.
+            }
+        }
+        return false;
+    }
+
 }
 
