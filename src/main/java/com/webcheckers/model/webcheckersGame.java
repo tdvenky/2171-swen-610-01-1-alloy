@@ -91,13 +91,7 @@ public class webcheckersGame {
     }
 
 
-    /**
-     *  exaplant
-     */
-    public void backupMove()
-    {
 
-    }
 
     /**
      *
@@ -337,7 +331,7 @@ public class webcheckersGame {
         }
     }
 
-    private boolean checkForOpponentForward(Move move) {
+    public boolean checkForOpponentForward(Move move) {
         int startCol = move.getStart().getCell();
         int endCol = move.getEnd().getCell();
         Space jumpForwardSpace;
@@ -361,7 +355,7 @@ public class webcheckersGame {
         return false;
     }
 
-    private boolean checkForOpponentBackWard(Move move) {
+    public boolean checkForOpponentBackWard(Move move) {
 
         int startCol = move.getStart().getCell();
         int endCol = move.getEnd().getCell();

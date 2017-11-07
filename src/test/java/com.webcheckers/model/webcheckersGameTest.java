@@ -7,6 +7,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class webcheckersGameTest {
+
+
     Color color;
     Color color2;
     Player player ;
@@ -20,14 +22,51 @@ public class webcheckersGameTest {
          color = Color.WHITE;
          color2 = Color.RED;
 
-         player = new Player("OMAR", color);
-         player1= new Player("ELIAS", color2);
+         player = new Player("OMAR", color2);
+         player1= new Player("ELIAS", color);
          board= new Board();
          game = new webcheckersGame(player, player1, board);
     }
 
     @After
     public void tearDown() throws Exception {
+    }
+
+
+    @Test
+    public void checkForOpponentForward() throws Exception {
+
+        board.rows.get(2).spaces.get(5).setPiece( new Piece(Piece.Type.SINGLE,Color.RED));
+        board.rows.get(4).spaces.get(3).setPiece( new Piece(Piece.Type.SINGLE,Color.WHITE));
+        webcheckersGame.currentPlayer = player;
+
+        assertTrue(game.checkForOpponentBackWard(new Move (new Position(5,1),new Position(3,3))));
+
+    }
+
+
+
+
+    @Test
+    public void checkForOpponentBackWard() throws Exception {
+        board.rows.get(5).spaces.get(1).setPiece( new Piece(Piece.Type.SINGLE,Color.RED));
+        board.rows.get(4).spaces.get(2).setPiece( new Piece(Piece.Type.SINGLE,Color.WHITE));
+        webcheckersGame.currentPlayer = player1;
+
+        assertTrue(game.checkForOpponentBackWard(new Move (new Position(2,5),new Position(4,3))));
+    }
+
+
+    @Test
+    public void removePiece() throws Exception {
+
+
+        Move move = new Move(new Position(4, 3), new Position(2, 5));
+        game.jumpForwardMove(move);
+        game.jumpBackwardMove(move);
+
+        assertNull(board.rows.get(4).spaces.get(2).getPiece());
+
     }
 
     @Test
@@ -128,20 +167,6 @@ public class webcheckersGameTest {
         game.makeTheMove(move);
         assertNotNull(position0);
     }
-
-//    @Test()
-//    public void testSuccess()  throws Throwable  {
-//        Color color = Color.RED;
-//        Player player = new Player("Yousef", color);
-//        webcheckersGame webcheckersGame0 = new webcheckersGame(player, player);
-//        Position position = new Position(2, 7);
-//        webcheckersGame.currentPlayer = player;
-//        Board board = new Board();
-//        Move move = new Move(position, position);
-//        webcheckersGame0.makeTheMove(move);
-//        assertTrue(webcheckersGame0.isPlayerTurn());
-//        assertEquals(2, webcheckersGame0.getNumberCurrentPlayers());
-//    }
 
 
 
