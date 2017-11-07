@@ -262,7 +262,7 @@ public class webcheckersGame {
 
     }
 
-    private boolean singleForwardMove(Move move) {
+    public boolean singleForwardMove(Move move) {
 
         int startRow = move.getStart().getRow();
         int startCol = move.getStart().getCell();
@@ -278,7 +278,7 @@ public class webcheckersGame {
         }
     }
 
-    private boolean singleBackwardMove(Move move) {
+    public boolean singleBackwardMove(Move move) {
 
         int startRow = move.getStart().getRow();
         int startCol = move.getStart().getCell();
@@ -293,7 +293,7 @@ public class webcheckersGame {
         }
     }
 
-    private boolean singleMoveCheck(Move move, Color color) {
+    public boolean singleMoveCheck(Move move, Color color) {
 
 
         if (color == Color.RED) {

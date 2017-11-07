@@ -30,6 +30,44 @@ public class webcheckersGameTest {
     public void tearDown() throws Exception {
     }
 
+    @Test
+    public void singleForwardMove() throws Exception {
+
+
+        Move move = new Move(new Position(3,4), new Position(4,5));
+
+        assertTrue(game.singleForwardMove(move));
+
+
+    }
+
+    @Test
+    public void singleBackwardMove() throws Exception {
+
+        Move move = new Move(new Position(2,3), new Position(1,2));
+
+        assertTrue(game.singleBackwardMove(move));
+    }
+
+    @Test
+    public void singleForwardMoveAndLegal() throws Exception {
+
+
+        Move move = new Move(new Position(5,4), new Position(5,5));
+
+        assertFalse(game.singleForwardMove(move));
+
+
+    }
+
+    @Test
+    public void singleBackwardMoveAndLegal() throws Exception {
+
+        Move move = new Move(new Position(3,1), new Position(1,2));
+
+        assertFalse(game.singleBackwardMove(move));
+    }
+
 
     @Test
     public void jumpBackwardMove1() throws Exception {

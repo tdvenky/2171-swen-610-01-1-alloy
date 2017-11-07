@@ -9,6 +9,20 @@ package com.webcheckers.model;
         import static org.junit.Assert.*;
 
 public class MoveTest {
+    @Test
+    public void getMoveMagnitude() throws Exception {
+        stratMove = new Position(2,3);
+        endMove = new Position(3,4);
+        Cut = new Move(stratMove,endMove);
+      assertEquals(Cut.getMoveMagnitude(),1);
+
+        stratMove = new Position(4,3);
+        endMove = new Position(2,5);
+        Cut = new Move(stratMove,endMove);
+        assertEquals(Cut.getMoveMagnitude(),2);
+    }
+
+
     Position stratMove;
     Position  endMove;
     Move Cut;
