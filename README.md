@@ -26,9 +26,13 @@ microframework.
 
 2. Execute `mvn compile exec:java`
 
-3. Open in your browser `http://localhost:4567/`
+3. Open two browser windows one in normal window and incognito window `http://localhost:4567/`
 
-4. Start a game and begin playing.
+4. In one window enter 'khalid' as username and in another window enter 'venky' as username
+
+5. This will start the game and you can start playing.
+
+6. Hit submit button after you make every move.
 
 
 ##License
