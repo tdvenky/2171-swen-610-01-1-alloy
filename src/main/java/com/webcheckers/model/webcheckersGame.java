@@ -326,7 +326,7 @@ public class webcheckersGame {
      * @param move
      * @return true if valid move else false
      */
-    private boolean jumpForwardMove(Move move) {
+    public boolean jumpForwardMove(Move move) {
         if (((move.getEnd().getRow() == move.getStart().getRow() + 2) &&
                 (((move.getEnd().getCell() == move.getStart().getCell() + 2))
                         || (move.getEnd().getCell() == move.getStart().getCell() - 2)))) {
@@ -408,7 +408,7 @@ public class webcheckersGame {
      * @param move
      * @return true if valid jump else return false
      */
-    private boolean jumpBackwardMove(Move move) {
+    public boolean jumpBackwardMove(Move move) {
 
 
         if (((move.getEnd().getRow() == move.getStart().getRow() - 2) &&
@@ -421,7 +421,7 @@ public class webcheckersGame {
         }
     }
 
-    private boolean jumpCheck(Move move, Color color) { //checking before jumping whether the opponent disc is placed or no.
+    public boolean jumpCheck(Move move, Color color) { //checking before jumping whether the opponent disc is placed or no.
 
 
         if (color == Color.RED) {
