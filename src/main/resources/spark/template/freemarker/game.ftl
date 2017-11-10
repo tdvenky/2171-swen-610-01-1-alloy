@@ -26,12 +26,7 @@
     <h1>Web Checkers</h1>
 
     <div class="navigation">
-    <#if currentPlayer??>
-        <a href="/">my home</a> |
         <a href="/signout">sign out </a>
-    <#else>
-        <a href="/signin">sign in </a>
-    </#if>
     </div>
 
     <div class="body">

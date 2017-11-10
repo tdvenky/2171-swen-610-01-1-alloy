@@ -147,6 +147,10 @@ public class WebServer {
 
     post("/checkTurn", new PostCheckTurnController(gameCenter), JsonUtils.json());
 
+    get("/resign", new GetResignController(gameCenter), templateEngine);
+
+    get("/signout", new GetSingOutController(), templateEngine);
+
 
   }
 

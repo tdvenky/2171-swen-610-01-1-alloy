@@ -57,4 +57,19 @@ public class Row implements Iterable {
 
         return spaces.iterator();
     }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+
+        if (!(obj instanceof Row)) {
+            return false;
+        }
+        obj = (Row) obj;
+
+        return this.spaces == ((Row) obj).spaces;
+
+    }
 }
