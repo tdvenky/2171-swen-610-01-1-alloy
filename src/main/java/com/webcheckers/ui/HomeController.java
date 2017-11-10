@@ -1,12 +1,9 @@
 package com.webcheckers.ui;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import com.webcheckers.appl.GameCenter;
 import spark.*;
-
-import java.util.Objects;
 
 import static spark.Spark.halt;
 
@@ -50,6 +47,11 @@ public class HomeController implements TemplateViewRoute {
 
     }
 
+    if (gameCenter.gamesPaired.size()>0){
+
+      vm.put("playedGames",gameCenter.getPlayerWinGames(httpSession.attribute("playerName")));
+
+    }
     vm.put("playerName",httpSession.attribute("playerName"));
     //check if the Player is linked?
     if(gameCenter.playerAlreadyPaired(httpSession.attribute("playerName")))

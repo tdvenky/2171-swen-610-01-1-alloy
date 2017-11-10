@@ -27,5 +27,21 @@ public class Board implements Iterable {
 
         return rows.iterator();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+
+        if (!(obj instanceof Board)) {
+            return false;
+        }
+        obj = (Board) obj;
+
+        return this.rows == ((Board) obj).rows;
+
+    }
 }
 

@@ -54,8 +54,7 @@ public class GameController implements TemplateViewRoute {
                 vm.put("title", "welcome");
                 vm.put("GameID",game.getGameID() );
 
-                //  vm.put("currentPlayer", game.currentPlayer);
-                //         vm.put("currentPlayer", game.getPlayerOne());
+
 
                 if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)){
                     vm.put("playerName",  game.getPlayerOne().getPlayerName());

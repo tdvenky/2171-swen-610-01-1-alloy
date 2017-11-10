@@ -38,7 +38,7 @@ public class webcheckersGameTest {
 
         board.rows.get(2).spaces.get(5).setPiece( new Piece(Piece.Type.SINGLE,Color.RED));
         board.rows.get(4).spaces.get(3).setPiece( new Piece(Piece.Type.SINGLE,Color.WHITE));
-        webcheckersGame.currentPlayer = player;
+        //webcheckersGame.currentPlayer = player;
 
         assertTrue(game.checkForOpponentBackWard(new Move (new Position(5,1),new Position(3,3))));
 
@@ -51,7 +51,7 @@ public class webcheckersGameTest {
     public void checkForOpponentBackWard() throws Exception {
         board.rows.get(5).spaces.get(1).setPiece( new Piece(Piece.Type.SINGLE,Color.RED));
         board.rows.get(4).spaces.get(2).setPiece( new Piece(Piece.Type.SINGLE,Color.WHITE));
-        webcheckersGame.currentPlayer = player1;
+        //webcheckersGame.currentPlayer = player1;
 
         assertTrue(game.checkForOpponentBackWard(new Move (new Position(2,5),new Position(4,3))));
     }

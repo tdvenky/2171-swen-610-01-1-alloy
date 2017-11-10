@@ -1,8 +1,6 @@
 package com.webcheckers.appl;
 
-import com.webcheckers.model.Board;
-import com.webcheckers.model.Player;
-import com.webcheckers.model.webcheckersGame;
+import com.webcheckers.model.*;
 import spark.Session;
 
 import java.util.*;
@@ -14,45 +12,10 @@ import java.util.logging.Logger;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-class PairGameWithPlayers{
 
-
-
-  private String id;
-  private String playerName;
-  private String opponetPlayer;
-  private webcheckersGame game;
-
-  PairGameWithPlayers(String playerName,String opponetPlayer,webcheckersGame game){
-
-    this.playerName = playerName;
-    this.opponetPlayer = opponetPlayer;
-    this.game = game;
-    this.id =  playerName+opponetPlayer;
-
-
-  }
-  public String getId() {
-    return id;
-  }
-
-  public String getPlayerName() {
-    return playerName;
-  }
-
-  public String getOpponetPlayer() {
-    return opponetPlayer;
-  }
-
-  public webcheckersGame getGame() {
-    return game;
-  }
-
-}
 public class GameCenter {
   private static final Logger LOG = Logger.getLogger(GameCenter.class.getName());
 
-  // TODO: 10/20/17 strcture that have plaer name with there game id
 
   /**
    * The user session attribute name that points to a game object.
@@ -68,10 +31,7 @@ public class GameCenter {
 
   private List<webcheckersGame> games = new ArrayList<webcheckersGame>();
 
-  private List<PairGameWithPlayers> gamesPaired = new ArrayList<PairGameWithPlayers>();
-
-  public  Player player;
-  public  Player opponetPlayer;
+  public List<PairGameWithPlayers> gamesPaired = new ArrayList<PairGameWithPlayers>();
 
   public boolean isGameCreated = false;
 
@@ -80,7 +40,12 @@ public boolean playerAlreadyPaired(String playerName){
 
   for(PairGameWithPlayers  gamesPaired : gamesPaired) {
     if(gamesPaired.getPlayerName().equalsIgnoreCase(playerName) || gamesPaired.getOpponetPlayer().equalsIgnoreCase(playerName)) {
-      return true;
+      if (gamesPaired.gameStat == gameStatus.active){
+        return true;
+
+      }else {
+        return false;
+      }
     }
   }
   return false;
@@ -93,6 +58,11 @@ public boolean playerAlreadyPaired(String playerName){
     registerPlayer("Venky");
     registerPlayer("Ommar");
     registerPlayer("kritten");
+
+    Player pl = new Player("hjsdj", Color.RED);
+    Player p2 = new Player("hjsdj", Color.RED);
+    Board board= new Board();
+
 
   }
   public String getOpponetplayerFromPairedList(String playerName){
@@ -127,7 +97,11 @@ public void PlayerNameAsSession(String name, Session session ){
 
       game.currentPlayer = player1;
 
-      gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
+      PairGameWithPlayers linked = new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game);
+      linked.gameStat = gameStatus.active;
+
+      gamesPaired.add(linked );
+
       return true;
     }else if (ArePlayersInSameGame(player1.getPlayerName(),player2.getPlayerName())) {
       return true;
@@ -165,22 +139,6 @@ public void PlayerNameAsSession(String name, Session session ){
    }
    return null;
  }
-  /**
-   * End the user's current
-   * and remove it from the session.
-   *
-   * @param session The HTTP session
-   */
-  public void end(Session session) {
-    // validation
-    Objects.requireNonNull(session, "session must not be null");
-    // remove the game from the user's session
-   // session.removeAttribute(GAME_ID);
-    // do some application-wide book-keeping
-    synchronized (this) {  // protect the critical code
-
-    }
-  }
 
   public boolean registerPlayer(String name){
 
@@ -218,18 +176,54 @@ public void PlayerNameAsSession(String name, Session session ){
   }
 
 
-  public webcheckersGame getGame(Session session) {
-    String name = session.attribute(PLAYER_NAME);
 
-    for (webcheckersGame game: games)
-    {
-      if(game.isExsit(name))
-      {
-        return game;
-      }
+public List<String> getPlayerWinGames(String palyerName){
+
+  List<PairGameWithPlayers> temp = getPlayerPlayedGames(palyerName);
+  List<String> wins = new ArrayList<String>();
+
+  for (PairGameWithPlayers PlayedGame: temp){
+
+    if (PlayedGame.gameStat == gameStatus.inActive){
+      if (!PlayedGame.getGame().getPlayerWhoHasResigned().equals(palyerName))
+      wins.add("won against"+PlayedGame.getGame().getPlayerWhoHasResigned());
     }
-    return null;
   }
+  System.out.println("game wins "+wins.size());
+
+  return wins;
+}
+  private List<PairGameWithPlayers> getPlayerPlayedGames(String palyerName){
+     List<PairGameWithPlayers> temp = new ArrayList<PairGameWithPlayers>();
+
+    for (PairGameWithPlayers gameObject: gamesPaired)
+    {
+     if(gameObject.getPlayerName().equals(palyerName)){
+       temp.add(gameObject);
+     }else if (gameObject.getOpponetPlayer().equals(palyerName)){
+
+       temp.add(gameObject);
+
+     }
+    }
+
+    return temp;
+  }
+
+ public void makeGameInactive(webcheckersGame game){
+
+   for (PairGameWithPlayers gameObject: gamesPaired)
+   {
+     if (game.equals(gameObject.getGame())){
+
+        gameObject.gameStat = gameStatus.inActive;
+
+     }
+   }
+
+
+ }
+
 
 
 }

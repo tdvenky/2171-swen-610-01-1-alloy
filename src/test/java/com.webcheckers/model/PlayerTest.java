@@ -30,11 +30,7 @@ public class PlayerTest {
 
     }
 
-    @Test
-    public void setPlayerStatus() throws Exception {
-        playerUnderTest.setPlayerStatus(Player.status.WatingForMatch);
-        assertEquals(Player.status.WatingForMatch,playerUnderTest.getPlayerStatus());
-    }
+
 
     @Test
     public void getPlayerName() throws Exception {

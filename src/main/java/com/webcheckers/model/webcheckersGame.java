@@ -11,23 +11,33 @@ public class webcheckersGame {
 
     private  Player playerOne;
     private  Player opponetPlayer;
-
-
+    public   Player currentPlayer;
 
     private  String gameID ;
+    private String playerWhoHasResigned;
+
     private boolean playerTurn = true;
-    public static Player currentPlayer;
+
     private Space removedSpace;
+
+    private Board board;
+
+    private message message;
+
+    List<Move> moves = new ArrayList<Move>();
+
+    private int numberCurrentPlayers = 2 ;
+
+
+    public String getPlayerWhoHasResigned() { return playerWhoHasResigned; }
 
     public Player getPlayerOne() {
         return playerOne;
     }
 
-
     public Player getOpponetPlayer() {
         return opponetPlayer;
     }
-
 
     public boolean isPlayerTurn() {
         return playerTurn;
@@ -69,11 +79,6 @@ public class webcheckersGame {
         this.numberCurrentPlayers = numberCurrentPlayers;
     }
 
-    private Board board;
-
-    private message message;
-    List<Move> moves = new ArrayList<Move>();
-    private int numberCurrentPlayers = 2 ;
 
 
 
@@ -89,6 +94,9 @@ public class webcheckersGame {
     {
         this.opponetPlayer = opponetPlayer;
         this.playerOne = player;
+    }
+    public void resignStatus(String playerWhoHasResigned){
+        this.playerWhoHasResigned=playerWhoHasResigned;
     }
 
     /**
@@ -447,5 +455,31 @@ public class webcheckersGame {
         return false;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // If the object is compared with itself then return true
+        if (obj == this) {
+            return true;
+        }
+
+
+        if (!(obj instanceof webcheckersGame)) {
+            return false;
+        }
+
+        obj = (webcheckersGame) obj;
+
+        return  this.opponetPlayer == ((webcheckersGame) obj).opponetPlayer
+                && this.playerTurn == ((webcheckersGame) obj).playerTurn
+                && this.playerOne == ((webcheckersGame) obj).playerOne
+                && this.playerWhoHasResigned == ((webcheckersGame) obj).playerWhoHasResigned
+                && this.gameID == ((webcheckersGame) obj).gameID
+                && this.currentPlayer == ((webcheckersGame) obj).currentPlayer
+                && this.board == ((webcheckersGame) obj).board
+                && this.message == ((webcheckersGame) obj).message
+                && this.moves == ((webcheckersGame) obj).moves
+                && this.numberCurrentPlayers == ((webcheckersGame) obj).numberCurrentPlayers;
+    }
 }
+
 

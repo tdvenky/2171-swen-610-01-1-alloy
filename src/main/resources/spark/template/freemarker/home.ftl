@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="navbar">
-    <a href="#home">Home</a>
+    <a href="/">Home</a>
 </div>
 
 <div class="main">
@@ -45,6 +45,29 @@
 
 
             </div>
+      <#--this is the second section for ppl who win -->
+            <div class="skill-wrap clearfix">
+                <div class="center wow fadeInDown">
+                    <h2> Played Games: </h2>
+                </div>
+
+                <div class="row">
+                <#if playedGames??>
+                    <#list playedGames as game>
+                            <div class="col-sm-3">
+                                <div class="sinlge-skill wow fadeInDown" data-wow-duration="1000ms" data-wow-delay="300ms">
+                                    <div class="joomla-skill">
+                                        <p><em>${game}</em></p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                    </#list>
+                </#if>
+
+
+                </div>
 
 
 
