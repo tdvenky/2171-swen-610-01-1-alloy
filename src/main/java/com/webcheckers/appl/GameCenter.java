@@ -122,7 +122,11 @@ public void PlayerNameAsSession(String name, Session session ){
        return false;
      }
       webcheckersGame game = new webcheckersGame(player1,player2, new Board());
+
+      game.setGameID(player1.getPlayerName()+player2.getPlayerName());
+
       game.currentPlayer = player1;
+
       gamesPaired.add( new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game));
       return true;
     }else if (ArePlayersInSameGame(player1.getPlayerName(),player2.getPlayerName())) {
@@ -145,12 +149,18 @@ public void PlayerNameAsSession(String name, Session session ){
 
  }
 
- public webcheckersGame getGameBy(String Id){
+ public webcheckersGame getGameBy(String playerName){
+
+
 
    for (PairGameWithPlayers game: gamesPaired)
    {
-     if (Id.equalsIgnoreCase(game.getId())){
+     System.out.println("getGameBy"+game.getId());
+     if (playerName.equalsIgnoreCase(game.getPlayerName())){
        return game.getGame();
+     }else if (playerName.equalsIgnoreCase(game.getOpponetPlayer())){
+       return game.getGame();
+
      }
    }
    return null;

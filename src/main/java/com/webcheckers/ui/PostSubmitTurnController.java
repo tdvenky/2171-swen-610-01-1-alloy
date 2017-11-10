@@ -26,12 +26,19 @@ public class PostSubmitTurnController implements  Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        System.out.println("handle");
-        game = gameCenter.getGameBy("khalidVENKY");
+        System.out.println(request.queryParams("GameID"));
+
+        String playerOne = request.session().attribute("playerName");
+        game = gameCenter.getGameBy(playerOne);
         if (game ==null){
-            game = gameCenter.getGameBy("VENKYkhalid");
+
+            System.out.println("Game is null");
+            response.redirect("/");
+            return null;
+
 
         }
+
 
         game.switchTurn();
         response.redirect("/game");

@@ -44,14 +44,16 @@ public class GameController implements TemplateViewRoute {
 
             if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Color.RED),new Player(playerOppnot, Color.WHITE))){
 
-                game = gameCenter.getGameBy(playerOne+playerOppnot);
+                game = gameCenter.getGameBy(playerOne);
                 if(game == null){
-                    game = gameCenter.getGameBy(playerOppnot+playerOne);
 
+                    System.out.println("game is null");
                 }
-                System.out.println("game  "+game);
+                System.out.println("game  "+game.getGameID());
 
                 vm.put("title", "welcome");
+                vm.put("GameID",game.getGameID() );
+
                 //  vm.put("currentPlayer", game.currentPlayer);
                 //         vm.put("currentPlayer", game.getPlayerOne());
 

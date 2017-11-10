@@ -46,6 +46,8 @@
                 It's ${opponentName}'s turn.  The page will refresh periodically
                 and you will be informed when it is your turn.
             </#if>
+
+                <#if GameID??> game id is ${GameID} </#if>
             </p>
 
             <div>
