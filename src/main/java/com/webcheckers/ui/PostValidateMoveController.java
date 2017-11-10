@@ -32,10 +32,13 @@ public class PostValidateMoveController implements  Route {
     public Object handle(Request request, Response response) {
         final Move move = JsonUtils.fromJson(request.body(), Move.class);
 
-        System.out.println(move.toString());
-        game = gameCenter.getGameBy("khalidVENKY");
+        String playerOne = request.session().attribute("playerName");
+
+        game = gameCenter.getGameBy(playerOne);
         if (game ==null){
-            game = gameCenter.getGameBy("VENKYkhalid");
+
+            System.out.println("Game is null");
+            return new message("problem has happened  .", message.Type.error);
 
         }
 

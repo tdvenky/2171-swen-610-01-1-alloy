@@ -11,6 +11,10 @@ public class webcheckersGame {
 
     private  Player playerOne;
     private  Player opponetPlayer;
+
+
+
+    private  String gameID ;
     private boolean playerTurn = true;
     public static Player currentPlayer;
     private Space removedSpace;
@@ -71,6 +75,15 @@ public class webcheckersGame {
     List<Move> moves = new ArrayList<Move>();
     private int numberCurrentPlayers = 2 ;
 
+
+
+    public String getGameID() {
+        return gameID;
+    }
+
+    public void setGameID(String gameID) {
+        this.gameID = gameID;
+    }
 
     public webcheckersGame(final Player player, final Player opponetPlayer)
     {

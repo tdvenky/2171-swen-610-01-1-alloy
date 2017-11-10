@@ -3,6 +3,24 @@
 An online Checkers game system built in Java 8 and Spark, a web
 microframework.
 
+##Features
+
+###The minimal viable product features:
+
+1. Every player must sign-in before playing a game.
+1. Two players must be able to play a game of checkers based upon the American rules.
+1. Either player of a game may choose to resign, which ends the game.
+
+###Enhancement product:
+
+1. Games can be stored for later review.
+1. Players can play asynchronously.
+1. A player may play more than one game at a time.
+1. Other players may view an on-going game that they are not playing.
+1. Players may play a game against an AI player.
+1. Players can play in checkers tournaments.
+
+
 ## Team
 
 - Khalid Almalki
