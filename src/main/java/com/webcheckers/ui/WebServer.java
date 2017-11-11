@@ -150,6 +150,7 @@ public class WebServer {
     get("/resign", new GetResignController(gameCenter), templateEngine);
 
     get("/signout", new GetSingOutController(), templateEngine);
+    post( "/resetTurn", new PostResetTurnController(gameCenter), JsonUtils.json());
 
 
   }

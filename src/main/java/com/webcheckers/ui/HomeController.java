@@ -47,9 +47,9 @@ public class HomeController implements TemplateViewRoute {
 
     }
 
-    if (gameCenter.gamesPaired.size()>0){
+    if (gameCenter.gameOver.size()>0){
 
-      vm.put("playedGames",gameCenter.getPlayerWinGames(httpSession.attribute("playerName")));
+      vm.put("playedGames",gameCenter.gameOver);
 
     }
     vm.put("playerName",httpSession.attribute("playerName"));

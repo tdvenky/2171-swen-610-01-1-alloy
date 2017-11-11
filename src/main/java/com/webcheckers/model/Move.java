@@ -13,6 +13,7 @@ public class Move {
     Position start;
     Position end;
 
+
     Move(Position strat, Position end ){
      this.start = strat;
      this.end = end;
