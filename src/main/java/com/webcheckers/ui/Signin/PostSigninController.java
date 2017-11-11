@@ -29,10 +29,12 @@ public class PostSigninController implements  TemplateViewRoute {
 
         if (!playerNameStr.isEmpty() || playerNameStr!=null) {
             if (gameCenter.isUserTaken(playerNameStr)) {
+                request.session().isNew();
+
                 gameCenter.PlayerNameAsSession(playerNameStr, request.session());
 
                 response.redirect("/");
-                halt();
+
                 return null;
             } else {
                 vm.put(NO_EXIST_ATTR, "No user add try again");

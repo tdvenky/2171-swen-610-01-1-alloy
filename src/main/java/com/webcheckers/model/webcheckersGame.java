@@ -1,5 +1,7 @@
 package com.webcheckers.model;
 
+import spark.Session;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,7 +98,8 @@ public class webcheckersGame {
         this.playerOne = player;
     }
     public void resignStatus(String playerWhoHasResigned){
-        this.playerWhoHasResigned=playerWhoHasResigned;
+        this.playerWhoHasResigned = playerWhoHasResigned;
+
     }
 
     /**
@@ -407,9 +410,18 @@ public class webcheckersGame {
     public void removePiece() {
 
         if (removedSpace != null) {
+            if (removedSpace.getPiece().getColor() ==  Color.RED){
+                board.removedRedPiece+=1;
 
-            System.out.println("r******************" + removedSpace.getCellIdx());
-            System.out.println("***************" + removedSpace.getPiece().getColor());
+            }else  if (removedSpace.getPiece().getColor() ==  Color.WHITE) {
+                board.removedWhitePiece+=1;
+
+            }
+
+
+
+            System.out.println("r********Red**********" +   board.removedRedPiece);
+            System.out.println("***********White****" +   board.removedWhitePiece);
 
             this.removedSpace.setPiece(null);
             this.removedSpace = null;

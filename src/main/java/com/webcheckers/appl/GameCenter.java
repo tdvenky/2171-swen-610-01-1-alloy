@@ -33,20 +33,24 @@ public class GameCenter {
 
   public List<PairGameWithPlayers> gamesPaired = new ArrayList<PairGameWithPlayers>();
 
-  public boolean isGameCreated = false;
+  public List<PairGameWithPlayers> gameOver = new ArrayList<PairGameWithPlayers>();
+
+    public boolean isGameCreated = false;
 
 
+    /**
+     * To check if thr palaer is liked with other Players. that meas if the user currently playing
+     * @param playerName the player name is key for checking if the user likned or not
+     * @return
+     */
 public boolean playerAlreadyPaired(String playerName){
 
   for(PairGameWithPlayers  gamesPaired : gamesPaired) {
-    if(gamesPaired.getPlayerName().equalsIgnoreCase(playerName) || gamesPaired.getOpponetPlayer().equalsIgnoreCase(playerName)) {
-      if (gamesPaired.gameStat == gameStatus.active){
-        return true;
-
-      }else {
-        return false;
+      if (gamesPaired.gameStat == gameStatus.active) {
+          if (gamesPaired.getPlayerName().equalsIgnoreCase(playerName) || gamesPaired.getOpponetPlayer().equalsIgnoreCase(playerName)) {
+              return true;
+          }
       }
-    }
   }
   return false;
 
@@ -59,32 +63,48 @@ public boolean playerAlreadyPaired(String playerName){
     registerPlayer("Ommar");
     registerPlayer("kritten");
 
-    Player pl = new Player("hjsdj", Color.RED);
-    Player p2 = new Player("hjsdj", Color.RED);
-    Board board= new Board();
 
 
   }
+
+    /**
+     * This method to get the Opponent name from paired players
+     * @param playerName
+     * @return
+     */
   public String getOpponetplayerFromPairedList(String playerName){
 
     for(PairGameWithPlayers  gamesPaired : gamesPaired) {
-      if(gamesPaired.getPlayerName().equalsIgnoreCase(playerName)) {
-        return gamesPaired.getOpponetPlayer();
-      }else {
-        return gamesPaired.getPlayerName();
-      }
+        if (gamesPaired.gameStat == gameStatus.active) {
+            if (gamesPaired.getPlayerName().equalsIgnoreCase(playerName)) {
+                return gamesPaired.getOpponetPlayer();
+            } else {
+                return gamesPaired.getPlayerName();
+            }
+        }
     }
     return null;
 
   }
 
-public void PlayerNameAsSession(String name, Session session ){
+    /**
+     * save the playerName in the created Session
+     * @param name
+     * @param session
+     */
+    public void PlayerNameAsSession(String name, Session session ){
 
-  session.attribute("playerName",name);
+        session.attribute("playerName",name);
 
 
-}
+        }
 
+    /**
+     * this method is the key method that start game between to players.
+     * @param player1
+     * @param player2
+     * @return return true if the tow players match, and false if not
+     */
  public boolean makeMatchAndSetUpGame(Player player1,Player player2){
    if (!playerAlreadyPaired(player1.getPlayerName()) && !playerAlreadyPaired(player2.getPlayerName()) )
    {
@@ -98,10 +118,10 @@ public void PlayerNameAsSession(String name, Session session ){
       game.currentPlayer = player1;
 
       PairGameWithPlayers linked = new PairGameWithPlayers(player1.getPlayerName(),player2.getPlayerName(),game);
+
       linked.gameStat = gameStatus.active;
 
-      gamesPaired.add(linked );
-
+       addPairedGame(linked);
       return true;
     }else if (ArePlayersInSameGame(player1.getPlayerName(),player2.getPlayerName())) {
       return true;
@@ -109,87 +129,82 @@ public void PlayerNameAsSession(String name, Session session ){
       return false;
     }
  }
+
+ private void addPairedGame(PairGameWithPlayers game){
+     for (PairGameWithPlayers gamesPaired : gamesPaired) {
+
+         if (gamesPaired.getId().equalsIgnoreCase(game.getId())) {
+                 return;
+         }
+
+     }
+
+     System.out.println("gamesPaired"+gamesPaired.size());
+     gamesPaired.add(game);
+ }
+
+    /**
+     * this main purpose of the method is to check if the players paling same game.
+     * @param player1
+     * @param player2
+     * @return True if yes same game , False if not
+     */
  public boolean ArePlayersInSameGame(String player1,String player2) {
 
    for (PairGameWithPlayers gamesPaired : gamesPaired) {
-     if (gamesPaired.getPlayerName().equalsIgnoreCase(player1) && gamesPaired.getOpponetPlayer().equalsIgnoreCase(player2)) {
-       return true;
-     } else if (gamesPaired.getPlayerName().equalsIgnoreCase(player2) && gamesPaired.getOpponetPlayer().equalsIgnoreCase(player1)) {
-       return true;
-     }
+       if (gamesPaired.gameStat == gameStatus.active) {
 
+           if (gamesPaired.getPlayerName().equalsIgnoreCase(player1) && gamesPaired.getOpponetPlayer().equalsIgnoreCase(player2)) {
+               return true;
+           } else if (gamesPaired.getPlayerName().equalsIgnoreCase(player2) && gamesPaired.getOpponetPlayer().equalsIgnoreCase(player1)) {
+               return true;
+           }
+
+       }
    }
    return false;
 
  }
 
- public webcheckersGame getGameBy(String playerName){
-
-
+    /**
+     * get the game data
+     * @param player1,player2
+     * @return game object , null if there is no game
+     */
+ public webcheckersGame getGameBy(String player1,String player2){
 
    for (PairGameWithPlayers game: gamesPaired)
    {
-     System.out.println("getGameBy"+game.getId());
-     if (playerName.equalsIgnoreCase(game.getPlayerName())){
-       return game.getGame();
-     }else if (playerName.equalsIgnoreCase(game.getOpponetPlayer())){
-       return game.getGame();
+       if (game.gameStat == gameStatus.active) {
+           if (game.getId().equalsIgnoreCase(player1+player2)) {
+               return game.getGame();
+           } else if (game.getId().equalsIgnoreCase(player2+player1)) {
 
-     }
+               return game.getGame();
+
+           }
+       }
    }
    return null;
  }
 
-  public boolean registerPlayer(String name){
-
-    if (isUserTaken(name)){
-     return false;
-
-    }else {
-
-      playersList.add(name.trim());
-      return true;
-
-    }
-
-  }
-
-  public boolean removePlayer(String name){
-
-    if (isUserTaken(name)){
-      playersList.remove(name.trim());
-      return true;
-    }else {
-      return false;
-    }
-
-  }
-
-  public boolean isUserTaken(String playerName) {
-
-    for(String player : playersList) {
-       if(player.trim().equalsIgnoreCase(playerName.trim())) {
-         return true;
-      }
-    }
-    return false;
-  }
 
 
 
 public List<String> getPlayerWinGames(String palyerName){
 
-  List<PairGameWithPlayers> temp = getPlayerPlayedGames(palyerName);
+
   List<String> wins = new ArrayList<String>();
 
-  for (PairGameWithPlayers PlayedGame: temp){
+  for (PairGameWithPlayers PlayedGame: gameOver){
 
-    if (PlayedGame.gameStat == gameStatus.inActive){
-      if (!PlayedGame.getGame().getPlayerWhoHasResigned().equals(palyerName))
-      wins.add("won against"+PlayedGame.getGame().getPlayerWhoHasResigned());
-    }
+      if (!PlayedGame.getGame().getPlayerWhoHasResigned().equals(palyerName)){
+          wins.add("won against"+PlayedGame.getGame().getPlayerWhoHasResigned());
+
+      }
+
   }
-  System.out.println("game wins "+wins.size());
+  System.out.println("game wins "+wins.size()+gameOver.size());
 
   return wins;
 }
@@ -210,19 +225,82 @@ public List<String> getPlayerWinGames(String palyerName){
     return temp;
   }
 
- public void makeGameInactive(webcheckersGame game){
+  public PairGameWithPlayers getPairObjectBy(webcheckersGame game){
+      for (PairGameWithPlayers gameObject: gamesPaired)
+      {
 
-   for (PairGameWithPlayers gameObject: gamesPaired)
-   {
-     if (game.equals(gameObject.getGame())){
+          if (game.equals(gameObject.getGame())){
 
-        gameObject.gameStat = gameStatus.inActive;
+            return gameObject;
 
-     }
-   }
+          }
+      }
+      return null;
+  }
+  public void resignGame(webcheckersGame game){
+      PairGameWithPlayers temp = getPairObjectBy(game);
+      System.out.println("resignGame resignGame");
+
+      if (temp != null){
+          gameOver.add(temp);
+          gamesPaired.remove(temp);
+          System.out.println("resignGame resignGame");
+      }
+  }
 
 
- }
+ //user Management
+
+    /**
+     * registerPlayer
+     * @param name
+     * @return True if the user is resisted
+     */
+    public boolean registerPlayer(String name){
+
+        if (isUserTaken(name)){
+            return false;
+
+        }else {
+
+            playersList.add(name.trim());
+            return true;
+
+        }
+
+    }
+
+    /**
+     * relase the name of the game
+     * @param name
+     * @return
+     */
+    public boolean removePlayer(String name){
+
+        if (isUserTaken(name)){
+            playersList.remove(name.trim());
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    /**
+     * check if the User name is Taken
+     * @param playerName
+     * @return True if the user name is taken , false is not.
+     */
+    public boolean isUserTaken(String playerName) {
+
+        for(String player : playersList) {
+            if(player.trim().equalsIgnoreCase(playerName.trim())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
 

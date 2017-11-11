@@ -19,7 +19,22 @@ public class PostCheckTurnController implements Route {
 
     @Override
     public Object handle(Request request, Response response) {
+        String playerOne = request.session().attribute("playerName");
+        String playerOp = request.session().attribute(playerOne);
 
-        return  true;
+        System.out.println("PostSubmitTurnController "+playerOp);
+        webcheckersGame game = gameCenter.getGameBy(playerOne, playerOp);
+        if (game ==null){
+
+            System.out.println("Game is null");
+            response.redirect("/");
+            return null;
+
+
+        }
+
+
+
+        return  game ==null || game.isTurn(game.currentPlayer);
     }
 }

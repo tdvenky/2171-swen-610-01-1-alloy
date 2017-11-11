@@ -1,16 +1,23 @@
 package com.webcheckers.ui;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.webcheckers.appl.GameCenter;
 import com.webcheckers.model.Move;
-import com.webcheckers.model.Piece;
 import com.webcheckers.model.message;
 import com.webcheckers.model.webcheckersGame;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONArray;
+import org.json.JSONException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.TemplateViewRoute;
 
-import java.awt.*;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class PostValidateMoveController implements  Route {
@@ -30,16 +37,26 @@ public class PostValidateMoveController implements  Route {
 
     @Override
     public Object handle(Request request, Response response) {
-        final Move move = JsonUtils.fromJson(request.body(), Move.class);
-
         String playerOne = request.session().attribute("playerName");
 
-        game = gameCenter.getGameBy(playerOne);
+
+        final String data = request.body();
+
+        final Move move = JsonUtils.fromJson(request.body(),Move.class);
+
+        String playerOp = request.session().attribute(playerOne);
+
+        if (playerOp==null){
+            playerOp =  gameCenter.getOpponetplayerFromPairedList(playerOne);
+        }
+
+        System.out.println(playerOp+playerOne);
+        game = gameCenter.getGameBy(playerOne,playerOp);
         if (game ==null){
 
-            System.out.println("Game is null");
-            return new message("problem has happened  .", message.Type.error);
+            System.out.println("Game ais null");
 
+            return new message("the other palaer has resign the game, you win this game. to exit  ", message.Type.info);
         }
 
         if (game.isValidMove(move)){
@@ -56,4 +73,5 @@ public class PostValidateMoveController implements  Route {
 
         }
     }
+
 }

@@ -31,71 +31,76 @@ public class GameController implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
         Map<String, Object> vm = new HashMap<>();
 
-
+        // getting Player Names
         String playerOne = request.session().attribute("playerName");
         String playerOppnot = request.queryParams("OpponetPlayer");
 
+        vm.put("title", "welcome");
 
+        // check if the names are not null
+        game = gameCenter.getGameBy(playerOne,playerOppnot);
 
-
-        System.out.println("playerOne  "+playerOne);
-        System.out.println("playerOppnot  "+playerOppnot);
-        if (playerOne != null && playerOppnot != null){
-
-            if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Color.RED),new Player(playerOppnot, Color.WHITE))){
-
-                game = gameCenter.getGameBy(playerOne);
-                if(game == null){
-
-                    System.out.println("game is null");
-                }
-                System.out.println("game  "+game.getGameID());
-
-                vm.put("title", "welcome");
-                vm.put("GameID",game.getGameID() );
-
-
-
-                if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)){
-                    vm.put("playerName",  game.getPlayerOne().getPlayerName());
-                    vm.put("playerColor", game.getPlayerOne().getPlayerColor());
-
-                    vm.put("opponentName", game.getOpponetPlayer().getPlayerName());
-                    vm.put("opponentColor", game.getOpponetPlayer().getPlayerColor());
-                    vm.put("rotate","rotate");
-
-
-                }else {
-
-                    vm.put("playerName",  game.getOpponetPlayer().getPlayerName());
-                    vm.put("playerColor", game.getOpponetPlayer().getPlayerColor());
-
-                    vm.put("opponentName", game.getPlayerOne().getPlayerName());
-                    vm.put("opponentColor", game.getPlayerOne().getPlayerColor());
-
+        if (game == null) {
+            if (playerOne != null && playerOppnot != null) {
+                // make the match and start game
+                if (gameCenter.makeMatchAndSetUpGame(new Player(playerOne, Color.RED), new Player(playerOppnot, Color.WHITE))) {
+                    game = gameCenter.getGameBy(playerOne,playerOppnot);
 
                 }
 
-                if (game.currentPlayer.getPlayerName().equalsIgnoreCase(playerOne)){
-                    vm.put("isMyTurn", true);
+            }else {
 
-                }else {
-                    vm.put("isMyTurn", false);
-
-                }
-                vm.put("message", game.getMessage());
-                vm.put("board", game.getBoard());
-
+                response.redirect("/");
+                halt();
+                return null;
             }
-        }else {
+        }
 
+        if (game == null) {
             response.redirect("/");
             halt();
             return null;
         }
 
+        if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)) {
+                vm.put("playerName", game.getPlayerOne().getPlayerName());
+                vm.put("playerColor", game.getPlayerOne().getPlayerColor());
 
-        return new ModelAndView(vm, "./game.ftl");
+                vm.put("opponentName", game.getOpponetPlayer().getPlayerName());
+                vm.put("opponentColor", game.getOpponetPlayer().getPlayerColor());
+                vm.put("rotate", "rotate");
+
+             request.session().attribute(playerOne,game.getOpponetPlayer().getPlayerName());
+
+
+
+        } else {
+
+                vm.put("playerName", game.getOpponetPlayer().getPlayerName());
+                vm.put("playerColor", game.getOpponetPlayer().getPlayerColor());
+
+                vm.put("opponentName", game.getPlayerOne().getPlayerName());
+                vm.put("opponentColor", game.getPlayerOne().getPlayerColor());
+
+               request.session().attribute(game.getOpponetPlayer().getPlayerName(),game.getPlayerOne().getPlayerName());
+
+
+        }
+            vm.put("title", "welcome");
+            vm.put("GameID", game.getGameID());
+
+            if (game.currentPlayer.getPlayerName().equalsIgnoreCase(playerOne)) {
+                vm.put("isMyTurn", true);
+
+            } else {
+                vm.put("isMyTurn", false);
+
+            }
+            vm.put("message", game.getMessage());
+            vm.put("board", game.getBoard());
+
+
+            return new ModelAndView(vm, "./game.ftl");
+        }
     }
 
-}

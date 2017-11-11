@@ -28,6 +28,7 @@ public class PostRegisterController implements TemplateViewRoute {
         if (!playerNameStr.isEmpty() || playerNameStr!=null) {
 
             if (gameCenter.registerPlayer(playerNameStr)) {
+                request.session().isNew();
 
                 gameCenter.PlayerNameAsSession(playerNameStr, request.session());
                 response.redirect("/");

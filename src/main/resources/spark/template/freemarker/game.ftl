@@ -42,7 +42,10 @@
                 and you will be informed when it is your turn.
             </#if>
 
-                <#if GameID??> game id is ${GameID} </#if>
+                <#if GameID??>
+
+                    game id is  <p id="GameID">${GameID}</p>
+                </#if>
             </p>
 
             <div>

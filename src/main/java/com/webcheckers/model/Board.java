@@ -7,7 +7,9 @@ import java.util.List;
 
 public class Board implements Iterable {
    public List<Row> rows = new ArrayList<Row>();
-   // public Row[] rows = new Row[8];
+    int removedRedPiece = 0;
+    int removedWhitePiece = 0;
+
     //  Row rows;
     public Board(){
         // generate the rows of board

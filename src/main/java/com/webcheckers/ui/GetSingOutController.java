@@ -7,6 +7,7 @@ public class GetSingOutController implements TemplateViewRoute {
     public ModelAndView handle(Request request, Response response) {
 
         request.session().removeAttribute("playerName");
+        request.session().removeAttribute(request.session().attribute("playerName"));
         request.session().invalidate();
 
         response.redirect("/");
