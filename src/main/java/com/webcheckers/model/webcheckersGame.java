@@ -30,6 +30,8 @@ public class webcheckersGame {
 
     private int numberCurrentPlayers = 2 ;
 
+    private boolean isMoved = false; // to only allow the user to move one peice
+
 
     public String getPlayerWhoHasResigned() { return playerWhoHasResigned; }
 
@@ -122,78 +124,73 @@ public class webcheckersGame {
      *
      * @return - Returns a boolean showing which players turn is playing now
      */
-    public boolean switchTurn()
+    public void switchTurn()
     {
-        if (playerTurn)
+        isMoved = false;
+
+        if (currentPlayer.getPlayerName().equalsIgnoreCase(playerOne.getPlayerName()))
         {
+
             currentPlayer = opponetPlayer;
-           return playerTurn = false;
+        }else {
+            currentPlayer = playerOne;
+
         }
-
-        currentPlayer = playerOne;
-
-        return playerTurn= true;
     }
 
-    /**
-     * Checks if the game object has a player with the given name
-     *
-     * @param playerName
-     *            - Given name to be found
-     * @return - return boolean if the player is in the game or not
-     */
 
-
-    public boolean isExsit(String playerName)
-    {
-        return opponetPlayer.getPlayerName().equals(playerName) || playerOne.getPlayerName().equals(playerName);
-    }
-    public Player playerObjectFor(String playerName)
-    {
-        if (playerOne.getPlayerName().equals(playerName)){
-
-            return  playerOne;
-          }
-          return opponetPlayer;
-    }
 
     /**
      * the method will make the move depends on the move object. when the move reached the end of the board, it will become a king
      * @param move - Accepted Move parameter, which was sent from Json
      * @return - Void --
      */
-    public void makeTheMove(Move move) {
-        Piece piece = null;
-        if (piece == null) {
-            piece = board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).getPiece();
+    public boolean makeTheMove(Move move) {
 
-            board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).setPiece(null); // remove the piece from start portions
+        if (!isMoved){
+            Piece piece = null;
+            if (piece == null) {
+                piece = board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).getPiece();
 
-            if (piece.getType() == Piece.Type.SINGLE) {
-                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE, currentPlayer.getPlayerColor())); // moved
+                board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).setPiece(null); // remove the piece from start portions
+
+                if (piece.getType() == Piece.Type.SINGLE) {
+                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE, currentPlayer.getPlayerColor())); // moved
+
+                } else {
+                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor())); // moved
+
+                }
+
+                // change the piece when it reaches 7 or 0 to be king
+                if (currentPlayer.getPlayerColor() == Color.RED && move.getEnd().getRow() == 7 && piece.getType() == Piece.Type.SINGLE) {
+
+                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
+
+
+                } else if (currentPlayer.getPlayerColor() == Color.WHITE && move.getEnd().getRow() == 0 & piece.getType() == Piece.Type.SINGLE) {
+
+                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
+
+
+                }
+
+                isMoved = true;
+                return true;
 
             } else {
-                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor())); // moved
+
+                System.out.println("piece is null");
+                return false;
 
             }
+        }else {
+            System.out.println("only one move is alow is null");
 
-            // change the piece when it reaches 7 or 0 to be king
-            if (currentPlayer.getPlayerColor() == Color.RED && move.getEnd().getRow() == 7 && piece.getType() == Piece.Type.SINGLE) {
+            return false;
 
-                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
-
-
-            } else if (currentPlayer.getPlayerColor() == Color.WHITE && move.getEnd().getRow() == 0 & piece.getType() == Piece.Type.SINGLE) {
-
-                board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
-
-
-            }
-
-
-        } else {
-            System.out.println("piece is null");
         }
+
 
 
     }
@@ -327,9 +324,9 @@ public class webcheckersGame {
         }
     }
 
-    public boolean isTurn(Player player)
+    public boolean isTurn(String p)
     {
-        if (playerOne.getPlayerName().equals(player.getPlayerName()) && playerTurn)
+        if (p.equalsIgnoreCase(currentPlayer.getPlayerName()))
         {
             return true;
         }
@@ -367,7 +364,7 @@ public class webcheckersGame {
             jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() - 1);
 
         }
-        if (jumpForwardSpace != null) {
+        if (jumpForwardSpace.getPiece() != null) {
             if (currentPlayer.getPlayerColor() != jumpForwardSpace.getPiece().getColor()) {
                 removedSpace = jumpForwardSpace;
 
@@ -394,7 +391,7 @@ public class webcheckersGame {
         }
 
 
-        if (space != null) {
+        if (space.getPiece() != null) {
             if (currentPlayer.getPlayerColor() != space.getPiece().getColor()) {
                 removedSpace = space;
                 return true;
@@ -406,7 +403,15 @@ public class webcheckersGame {
 
     }
 
+    public Player isWon() {
 
+       if (board.removedWhitePiece == 10){
+           return playerOne ;
+       }else if (board.removedRedPiece ==10){
+           return opponetPlayer;
+       }
+       return null;
+    }
     public void removePiece() {
 
         if (removedSpace != null) {

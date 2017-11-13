@@ -1,6 +1,7 @@
 package com.webcheckers.ui;
 
 import com.webcheckers.appl.GameCenter;
+import com.webcheckers.model.Player;
 import com.webcheckers.model.webcheckersGame;
 import spark.Request;
 import spark.Response;
@@ -8,6 +9,8 @@ import spark.Route;
 import spark.TemplateViewRoute;
 
 import java.util.Objects;
+
+import static spark.Spark.halt;
 
 public class PostSubmitTurnController implements  Route {
 
@@ -28,11 +31,8 @@ public class PostSubmitTurnController implements  Route {
     public Object handle(Request request, Response response) {
 
         String playerOne = request.session().attribute("playerName");
-        String playerOp = request.session().attribute(playerOne);
+        String playerOp = request.queryParams("OpponetPlayer");
 
-        if (playerOp==null){
-            playerOp =  gameCenter.getOpponetplayerFromPairedList(playerOne);
-        }
 
         System.out.println("PostSubmitTurnController "+playerOp);
         game = gameCenter.getGameBy(playerOne,playerOp);
@@ -46,8 +46,34 @@ public class PostSubmitTurnController implements  Route {
         }
 
 
+
+        // check who win the game.
+        if (game.isWon() !=null){
+            Player won = game.isWon();
+            System.out.println(won.getPlayerColor());
+            System.out.println(game.currentPlayer.getPlayerColor());
+
+            if (game.currentPlayer.getPlayerColor().equals(won.getPlayerColor())){
+                game.switchTurn();
+
+
+                response.redirect("/youWon");
+
+
+            }else {
+                game.switchTurn();
+
+                response.redirect("/youLost");
+            }
+
+            gameCenter.resignGame(game);
+            return null;
+
+        }
         game.switchTurn();
-        response.redirect("/game");
+
+        response.redirect("/");
+        halt();
 
         return null;
     }

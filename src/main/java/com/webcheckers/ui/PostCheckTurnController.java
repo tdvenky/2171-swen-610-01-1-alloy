@@ -22,7 +22,6 @@ public class PostCheckTurnController implements Route {
         String playerOne = request.session().attribute("playerName");
         String playerOp = request.session().attribute(playerOne);
 
-        System.out.println("PostSubmitTurnController "+playerOp);
         webcheckersGame game = gameCenter.getGameBy(playerOne, playerOp);
         if (game ==null){
 
@@ -35,6 +34,6 @@ public class PostCheckTurnController implements Route {
 
 
 
-        return  game ==null || game.isTurn(game.currentPlayer);
+        return   game.isTurn(playerOne);
     }
 }

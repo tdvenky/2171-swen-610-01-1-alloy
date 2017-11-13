@@ -161,7 +161,7 @@ public class webcheckersGameTest {
     @Test()
     public void testFailure()  throws Throwable  {
 
-        game.switchTurn();
+      //  game.switchTurn();
         Position position0 = new Position(0, 7);
         Move move = new Move(position0, position0);
         game.makeTheMove(move);

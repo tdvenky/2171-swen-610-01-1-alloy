@@ -62,6 +62,19 @@ public class GameController implements TemplateViewRoute {
             return null;
         }
 
+         if (game.isWon()!=null){
+
+            if (game.isWon().getPlayerName().equalsIgnoreCase(playerOne)){
+                response.redirect("/youWon");
+                halt();
+                return null;
+            }else {
+                response.redirect("/youLost");
+                halt();
+                return null;
+            }
+
+         }
         if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(playerOne)) {
                 vm.put("playerName", game.getPlayerOne().getPlayerName());
                 vm.put("playerColor", game.getPlayerOne().getPlayerColor());
@@ -89,13 +102,8 @@ public class GameController implements TemplateViewRoute {
             vm.put("title", "welcome");
             vm.put("GameID", game.getGameID());
 
-            if (game.currentPlayer.getPlayerName().equalsIgnoreCase(playerOne)) {
-                vm.put("isMyTurn", true);
+                vm.put("isMyTurn", game.isTurn(playerOne));
 
-            } else {
-                vm.put("isMyTurn", false);
-
-            }
             vm.put("message", game.getMessage());
             vm.put("board", game.getBoard());
 
