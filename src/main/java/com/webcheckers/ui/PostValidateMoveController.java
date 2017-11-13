@@ -9,16 +9,14 @@ import com.webcheckers.model.webcheckersGame;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class PostValidateMoveController implements  Route {
 
@@ -34,23 +32,51 @@ public class PostValidateMoveController implements  Route {
         this.gameCenter = gameCenter;
     }
 
+    public static Map<String,String> parse(JSONObject json , Map<String,String> out) throws JSONException{
+        Iterator<String> keys = json.keys();
+        while(keys.hasNext()){
+            String key = keys.next();
+            String val = null;
+            try{
+                JSONObject value = json.getJSONObject(key);
+                parse(value,out);
+            }catch(Exception e){
+                val = json.getString(key);
+            }
+
+            if(val != null){
+                out.put(key,val);
+            }
+        }
+        return out;
+    }
 
     @Override
-    public Object handle(Request request, Response response) {
+    public Object handle(Request request, Response response) throws JSONException {
         String playerOne = request.session().attribute("playerName");
 
 
         final String data = request.body();
 
-        final Move move = JsonUtils.fromJson(request.body(),Move.class);
+        JSONObject object = new JSONObject();
 
-        String playerOp = request.session().attribute(playerOne);
-
-        if (playerOp==null){
-            playerOp =  gameCenter.getOpponetplayerFromPairedList(playerOne);
+        try {
+             object = new JSONObject(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
-        System.out.println(playerOp+playerOne);
+        String opponetName = object.getString("OpponetPlayer");
+
+        System.out.println("opponetName"+opponetName);
+        String moveSt = object.getString("move");
+
+        final Move move = JsonUtils.fromJson(moveSt,Move.class);
+
+        String playerOp = object.getString("OpponetPlayer");
+
+
+
         game = gameCenter.getGameBy(playerOne,playerOp);
         if (game ==null){
 
@@ -60,12 +86,18 @@ public class PostValidateMoveController implements  Route {
         }
 
         if (game.isValidMove(move)){
-            game.makeTheMove(move);
-            game.removePiece();
-            System.out.println(game.currentPlayer.getPlayerColor());
+            if (game.makeTheMove(move)){
+                game.removePiece();
+                System.out.println(game.currentPlayer.getPlayerColor());
+                return new message("Your move is legal .", message.Type.info);
+
+            }else {
+                return new message("Submit your move, you allow to Play on move.", message.Type.error);
+
+            }
 
 
-            return new message("Your move is legal .", message.Type.info);
+
 
 
         }else {

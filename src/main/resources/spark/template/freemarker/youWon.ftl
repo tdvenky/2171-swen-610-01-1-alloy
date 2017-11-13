@@ -26,7 +26,7 @@
                     <i class="fa fa-flask fa-5x mar-bot20"></i>
                     <h2 class="slogan">Game over !!</h2>
                     <p>
-                    You have lost the Game, try again...
+                    You have Won the Game...
                     </p>
                     <a href="/">Close</a>
                 </div>

@@ -35,7 +35,6 @@ public class GameCenter {
 
   public List<PairGameWithPlayers> gameOver = new ArrayList<PairGameWithPlayers>();
 
-    public boolean isGameCreated = false;
 
 
     /**
@@ -67,6 +66,22 @@ public boolean playerAlreadyPaired(String playerName){
 
   }
 
+    /**
+     * mehtod to send back the object of player that has the same name that been sent
+     * @param plyerName
+     * @param game
+     * @return
+     */
+  public Player getPlayerObjectBy(String plyerName,webcheckersGame game){
+
+      if (game.getPlayerOne().getPlayerName().equalsIgnoreCase(plyerName)){
+          return game.getPlayerOne();
+      }else if (game.getOpponetPlayer().getPlayerName().equalsIgnoreCase(plyerName))
+      {
+          return game.getOpponetPlayer();
+      }
+      return null;
+  }
     /**
      * This method to get the Opponent name from paired players
      * @param playerName
@@ -198,10 +213,22 @@ public List<String> getPlayerWinGames(String palyerName){
 
   for (PairGameWithPlayers PlayedGame: gameOver){
 
-      if (!PlayedGame.getGame().getPlayerWhoHasResigned().equals(palyerName)){
-          wins.add("won against"+PlayedGame.getGame().getPlayerWhoHasResigned());
+      if (PlayedGame.getOpponetPlayer().equalsIgnoreCase(palyerName)|| PlayedGame.getPlayerName().equalsIgnoreCase(palyerName) ){
+          if (PlayedGame.getGame().getPlayerWhoHasResigned()!=null){
+              if (!PlayedGame.getGame().getPlayerWhoHasResigned().equals(palyerName)){
+                  wins.add("You Won the Game against "+PlayedGame.getGame().getPlayerWhoHasResigned());
+
+              }
+          }else {
+
+              if (PlayedGame.getGame().isWon().getPlayerName().equalsIgnoreCase(palyerName)){
+                  wins.add("You Won the Game against "+PlayedGame.getGame().getOpponetPlayer().getPlayerName());
+
+              }
+          }
 
       }
+
 
   }
   System.out.println("game wins "+wins.size()+gameOver.size());
@@ -237,6 +264,28 @@ public List<String> getPlayerWinGames(String palyerName){
       }
       return null;
   }
+    public void resignGameby(String playerName){
+
+        System.out.println( "resignGameby before " +gamesPaired.size());
+        Iterator<PairGameWithPlayers> iter = gamesPaired.iterator();
+
+        while (iter.hasNext()) {
+            PairGameWithPlayers temp = iter.next();
+
+            if (temp.getPlayerName().equalsIgnoreCase(playerName)){
+
+                gameOver.add(temp);
+                gamesPaired.remove(temp);
+            }else if (temp.getOpponetPlayer().equalsIgnoreCase(playerName)){
+
+                gameOver.add(temp);
+                gamesPaired.remove(temp);
+            }
+        }
+        System.out.println( "resignGameby " +gamesPaired.size());
+
+    }
+
   public void resignGame(webcheckersGame game){
       PairGameWithPlayers temp = getPairObjectBy(game);
       System.out.println("resignGame resignGame");

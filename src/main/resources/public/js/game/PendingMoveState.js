@@ -28,7 +28,15 @@ define(function(require){
   //
   // Public (external) methods
   //
-
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
   /**
    * Get the name of this state.
    */
@@ -58,7 +66,9 @@ define(function(require){
         view.setState(GameConstants.STABLE_TURN);
       }
     }
-    jQuery.post('/validateMove', JSON.stringify(move), handleMoveResponse, 'json');
+
+      var obj = { "move":move, "OpponetPlayer":getParameterByName("OpponetPlayer",window.location.href)};
+    jQuery.post('/validateMove', JSON.stringify(obj), handleMoveResponse, 'json');
   }
 
   // export class constructor

@@ -26,12 +26,12 @@
     <h1>Web Checkers</h1>
 
     <div class="navigation">
-        <a href="/signout">sign out </a>
+        <a id="resignLink"> Resign </a>
     </div>
 
     <div class="body">
         <form id="gameForm" action="/submitTurn" method="POST">
-
+        <input type="hidden" name="OpponetPlayer" value="${opponentName}">
             <p>
                 You are playing a game of checkers with ${opponentName}.
             <#if isMyTurn>
@@ -42,10 +42,6 @@
                 and you will be informed when it is your turn.
             </#if>
 
-                <#if GameID??>
-
-                    game id is  <p id="GameID">${GameID}</p>
-                </#if>
             </p>
 
             <div>

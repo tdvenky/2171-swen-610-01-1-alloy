@@ -7,6 +7,9 @@ import java.util.List;
 
 public class Board implements Iterable {
    public List<Row> rows = new ArrayList<Row>();
+
+
+
     int removedRedPiece = 0;
     int removedWhitePiece = 0;
 
@@ -44,6 +47,13 @@ public class Board implements Iterable {
 
         return this.rows == ((Board) obj).rows;
 
+    }
+    public int getRemovedRedPiece() {
+        return removedRedPiece;
+    }
+
+    public int getRemovedWhitePiece() {
+        return removedWhitePiece;
     }
 }
 
