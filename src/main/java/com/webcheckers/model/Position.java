@@ -18,8 +18,4 @@ public class Position {
         this.cell = cell;
     }
 
-    @Override
-    public String toString() {
-        return  "rows "+row+"  -----"+" cell  "+cell;
-    }
 }

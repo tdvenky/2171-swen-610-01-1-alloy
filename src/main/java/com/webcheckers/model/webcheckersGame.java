@@ -16,7 +16,7 @@ public class webcheckersGame {
     public   Player currentPlayer;
 
     private  String gameID ;
-    private String playerWhoHasResigned;
+    public String playerWhoHasResigned;
 
     private boolean playerTurn = true;
 
@@ -26,11 +26,10 @@ public class webcheckersGame {
 
     private message message;
 
-    List<Move> moves = new ArrayList<Move>();
 
     private int numberCurrentPlayers = 2 ;
 
-    private boolean isMoved = false; // to only allow the user to move one peice
+    public boolean isMoved = false; // to only allow the user to move one peice
 
 
     public String getPlayerWhoHasResigned() { return playerWhoHasResigned; }
@@ -66,24 +65,6 @@ public class webcheckersGame {
     public void setMessage(com.webcheckers.model.message message) {
         this.message = message;
     }
-
-    public List<Move> getMoves() {
-        return moves;
-    }
-
-    public void setMoves(List<Move> moves) {
-        this.moves = moves;
-    }
-
-    public int getNumberCurrentPlayers() {
-        return numberCurrentPlayers;
-    }
-
-    public void setNumberCurrentPlayers(int numberCurrentPlayers) {
-        this.numberCurrentPlayers = numberCurrentPlayers;
-    }
-
-
 
 
     public String getGameID() {
@@ -494,7 +475,7 @@ public class webcheckersGame {
                 && this.currentPlayer == ((webcheckersGame) obj).currentPlayer
                 && this.board == ((webcheckersGame) obj).board
                 && this.message == ((webcheckersGame) obj).message
-                && this.moves == ((webcheckersGame) obj).moves
+
                 && this.numberCurrentPlayers == ((webcheckersGame) obj).numberCurrentPlayers;
     }
 }

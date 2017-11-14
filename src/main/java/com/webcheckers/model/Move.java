@@ -26,8 +26,4 @@ public class Move {
                 .sqrt(Math.pow(start.getRow() - end.getRow(), 2) + Math.pow(start.getCell() - end.getCell(), 2));
     }
 
-    @Override
-    public String toString() {
-        return "start : "+start.toString()+" end : "+end.toString();
-    }
 }

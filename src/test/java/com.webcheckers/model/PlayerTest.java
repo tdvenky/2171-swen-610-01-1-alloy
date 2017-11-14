@@ -7,6 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
+
+
+
     Player playerUnderTest ;
 
     @Before
@@ -15,6 +18,23 @@ public class PlayerTest {
          playerUnderTest = new Player("testNmae", Color.RED);
 
     }
+    @Test
+    public void equals() throws Exception {
+
+        Player playerUnderTest1 = new Player("testNmae", Color.RED);
+        assertTrue(playerUnderTest1.equals(playerUnderTest1));
+
+        assertEquals(playerUnderTest1,playerUnderTest1);
+
+
+        Player p2 = new Player("d", Color.WHITE);
+
+        assertFalse(playerUnderTest.equals(p2));
+        assertFalse(playerUnderTest.equals(new Space(0,false,new Piece(Piece.Type.KING,Color.RED))));
+
+
+    }
+
 
     @After
     public void tearDown() throws Exception {
