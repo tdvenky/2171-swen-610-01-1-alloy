@@ -2,28 +2,26 @@ package com.webcheckers.model;
 
 public class Move {
 
-    public Position getStart() {
-        return start;
-    }
+	public Position getStart() {
+		return start;
+	}
 
-    public Position getEnd() {
-        return end;
-    }
+	public Position getEnd() {
+		return end;
+	}
 
-    Position start;
-    Position end;
+	Position start;
+	Position end;
 
+	Move(Position strat, Position end) {
+		this.start = strat;
+		this.end = end;
+	}
 
-    Move(Position strat, Position end ){
-     this.start = strat;
-     this.end = end;
-    }
+	public int getMoveMagnitude() {
 
-    public int getMoveMagnitude()
-    {
-
-        return (int) Math
-                .sqrt(Math.pow(start.getRow() - end.getRow(), 2) + Math.pow(start.getCell() - end.getCell(), 2));
-    }
+		return (int) Math
+				.sqrt(Math.pow(start.getRow() - end.getRow(), 2) + Math.pow(start.getCell() - end.getCell(), 2));
+	}
 
 }

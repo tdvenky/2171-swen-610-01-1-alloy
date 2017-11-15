@@ -12,12 +12,12 @@ import spark.Response;
 import spark.Session;
 
 import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class PostSubmitTurnControllerTest {
+public class PostCheckTurnControllerTest {
+
     private GameCenter gamecenter = new GameCenter();
 
     private static final Player PLAYER1 = new Player("test1", Color.RED);
@@ -26,40 +26,30 @@ public class PostSubmitTurnControllerTest {
 
     private Request request = mock(Request.class);
     private Response response = mock(Response.class);
-    PostSubmitTurnController cut;
+    PostCheckTurnController cut;
     @Before
     public void setUp() throws Exception {
-        gamecenter.registerPlayer( "test1");
-        gamecenter.registerPlayer( "test2");
         gamecenter.makeMatchAndSetUpGame(PLAYER1,PLAYER2);
         when(request.session()).thenReturn(session);
+
         when(session.attribute("playerName")).thenReturn("test1");
-        when(request.queryParams("OpponetPlayer")).thenReturn("test2");
-        cut = new PostSubmitTurnController(gamecenter);
+        when(request.attribute("OpponetPlayer")).thenReturn("test2");
+        cut = new PostCheckTurnController(gamecenter);
     }
 
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    @Test(expected = spark.HaltException.class)
-    public void SubmitTurn(){
-
-       assertNotNull(cut.handle(request,response));
-    }
     @Test
-    public void SubmitTurnDiffrentBehavior(){
-        when(request.queryParams("OpponetPlayer")).thenReturn("test5");
+    public void checkTurnNullGAme(){
 
         assertNull(cut.handle(request,response));
     }
     @Test
-    public void SubmitTurnWonGame(){
+    public void checkTurn()
+    {
+        when(session.attribute("test1")).thenReturn("test2");
 
-        webcheckersGame game = gamecenter.getGameBy(PLAYER1.getPlayerName(),PLAYER2.getPlayerName());
-        game.currentPlayer = PLAYER1;
-        game.getBoard().removedWhitePiece = 10;
-        assertNull(cut.handle(request,response));
+        assertTrue((Boolean) cut.handle(request,response));
     }
+
+
 
 }

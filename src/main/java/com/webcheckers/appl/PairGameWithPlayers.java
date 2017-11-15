@@ -3,44 +3,37 @@ package com.webcheckers.appl;
 import com.webcheckers.model.gameStatus;
 import com.webcheckers.model.webcheckersGame;
 
- class PairGameWithPlayers{
+class PairGameWithPlayers {
 
+	private String id;
+	private String playerName;
+	private String opponetPlayer;
+	private webcheckersGame game;
+	public gameStatus gameStat;
 
+	PairGameWithPlayers(String playerName, String opponetPlayer, webcheckersGame game) {
 
-    private String id;
-    private String playerName;
-    private String opponetPlayer;
-    private webcheckersGame game;
-    public gameStatus gameStat;
+		this.playerName = playerName;
+		this.opponetPlayer = opponetPlayer;
+		this.game = game;
+		this.id = playerName + opponetPlayer;
 
+	}
 
+	public String getId() {
+		return id;
+	}
 
-    PairGameWithPlayers(String playerName,String opponetPlayer,webcheckersGame game){
+	public String getPlayerName() {
+		return playerName;
+	}
 
-        this.playerName = playerName;
-        this.opponetPlayer = opponetPlayer;
-        this.game = game;
-        this.id =  playerName+opponetPlayer;
+	public String getOpponetPlayer() {
+		return opponetPlayer;
+	}
 
-
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public String getOpponetPlayer() {
-        return opponetPlayer;
-    }
-
-    public webcheckersGame getGame() {
-        return game;
-    }
-
+	public webcheckersGame getGame() {
+		return game;
+	}
 
 }

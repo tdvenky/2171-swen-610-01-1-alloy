@@ -1,5 +1,6 @@
 package com.webcheckers.model;
 
+import com.webcheckers.appl.GameCenter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -334,10 +335,26 @@ public class webcheckersGameTest {
 
     @Test
     public void isWon() throws Exception {
+        GameCenter center = new GameCenter();
+        center.makeMatchAndSetUpGame(player,player1);
+
+        game.getBoard().removedWhitePiece = 10;
+        assertEquals(player.getPlayerName(),game.isWon().getPlayerName());
+
+        center.makeMatchAndSetUpGame(player,player1);
+        game.getBoard().removedRedPiece = 10;
+        assertNotEquals(player1.getPlayerName(),game.isWon().getPlayerName());
     }
 
     @Test
     public void removePiece1() throws Exception {
+        GameCenter center = new GameCenter();
+
+        center.makeMatchAndSetUpGame(player,player1);
+
+        game.removedSpace = board.rows.get(2).spaces.get(1);
+        game.removePiece();
+        assertNull(board.rows.get(2).spaces.get(1).getPiece());
     }
 
     @Test

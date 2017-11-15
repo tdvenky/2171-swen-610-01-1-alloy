@@ -1,24 +1,24 @@
 package com.webcheckers.model;
 
 public class message {
-    public String getText() {
-        return text;
-    }
+	public String getText() {
+		return text;
+	}
 
-    private String text;
+	private String text;
 
-    public Type getType() {
-        return type;
-    }
+	public Type getType() {
+		return type;
+	}
 
-    private Type type;
+	private Type type;
 
+	public enum Type {
+		info, error
+	}
 
-    public enum Type {
-        info, error
-    }
-    public message(String text, Type type){
-        this.text = text;
-        this.type = type;
-    }
+	public message(String text, Type type) {
+		this.text = text;
+		this.type = type;
+	}
 }

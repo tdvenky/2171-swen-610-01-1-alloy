@@ -12,37 +12,38 @@ import java.util.Objects;
 
 import static spark.Spark.halt;
 
-public class GetResignController implements  Route {
-    private final GameCenter gameCenter;
-    public GetResignController(GameCenter gameCenter) {
+public class GetResignController implements Route {
+	private final GameCenter gameCenter;
 
-        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-        this.gameCenter= gameCenter;
+	public GetResignController(GameCenter gameCenter) {
 
-    }
+		Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+		this.gameCenter = gameCenter;
 
-    @Override
-    public ModelAndView handle(Request request, Response response) throws JSONException {
-        String playerOne = request.session().attribute("playerName");
+	}
 
-        String opponetName = request.queryParams("OpponetPlayer");
+	@Override
+	public ModelAndView handle(Request request, Response response) throws JSONException {
+		String playerOne = request.session().attribute("playerName");
 
-        System.out.println(" Request opponetName"+opponetName);
+		String opponetName = request.queryParams("OpponetPlayer");
 
-        webcheckersGame game = gameCenter.getGameBy(playerOne,opponetName);
+		System.out.println(" Request opponetName" + opponetName);
 
-        if (game ==null){
+		webcheckersGame game = gameCenter.getGameBy(playerOne, opponetName);
 
-            System.out.println("Game is null");
-            response.redirect("/");
-            halt();
-            return null;
-        }
-        game.resignStatus(playerOne );
-        gameCenter.resignGame(game);
-        response.redirect("/");
-        halt();
-        return null;
+		if (game == null) {
 
-    }
+			System.out.println("Game is null");
+			response.redirect("/");
+			halt();
+			return null;
+		}
+		game.resignStatus(playerOne);
+		gameCenter.resignGame(game);
+		response.redirect("/");
+		halt();
+		return null;
+
+	}
 }

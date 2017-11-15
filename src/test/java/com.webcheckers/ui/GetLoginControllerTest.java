@@ -1,7 +1,5 @@
 package com.webcheckers.ui;
 
-import com.webcheckers.ui.Signin.GetLoginController;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import spark.ModelAndView;
@@ -9,9 +7,7 @@ import spark.Request;
 import spark.Response;
 import spark.Session;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;

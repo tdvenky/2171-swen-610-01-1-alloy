@@ -6,12 +6,12 @@ import spark.Response;
 import spark.Route;
 import spark.TemplateViewRoute;
 
-public class PostResetTurnController implements  Route {
-    public PostResetTurnController(GameCenter gameCenter) {
-    }
+public class PostResetTurnController implements Route {
+	public PostResetTurnController(GameCenter gameCenter) {
+	}
 
-    @Override
-    public Object handle(Request request, Response response) throws Exception {
-        return null;
-    }
+	@Override
+	public Object handle(Request request, Response response) throws Exception {
+		return null;
+	}
 }

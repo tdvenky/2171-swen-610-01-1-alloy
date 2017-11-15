@@ -6,478 +6,464 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class webcheckersGame {
-    /**
-     * Attributes
-     */
-//    public List<Row> rows = new ArrayList<Row>();
+	/**
+	 * Attributes
+	 */
+	// public List<Row> rows = new ArrayList<Row>();
 
-    private  Player playerOne;
-    private  Player opponetPlayer;
-    public   Player currentPlayer;
+	private Player playerOne;
+	private Player opponetPlayer;
+	public Player currentPlayer;
 
-    private  String gameID ;
-    public String playerWhoHasResigned;
+	private String gameID;
+	public String playerWhoHasResigned;
 
-    private boolean playerTurn = true;
+	private boolean playerTurn = true;
 
-    private Space removedSpace;
+	public Space removedSpace;
 
-    private Board board;
+	private Board board;
 
-    private message message;
+	private message message;
 
+	private int numberCurrentPlayers = 2;
 
-    private int numberCurrentPlayers = 2 ;
+	public boolean isMoved = false; // to only allow the user to move one peice
 
-    public boolean isMoved = false; // to only allow the user to move one peice
+	public String getPlayerWhoHasResigned() {
+		return playerWhoHasResigned;
+	}
+
+	public Player getPlayerOne() {
+		return playerOne;
+	}
+
+	public Player getOpponetPlayer() {
+		return opponetPlayer;
+	}
+
+	public boolean isPlayerTurn() {
+		return playerTurn;
+	}
 
+	public void setPlayerTurn(boolean playerTurn) {
+		this.playerTurn = playerTurn;
+	}
 
-    public String getPlayerWhoHasResigned() { return playerWhoHasResigned; }
+	public Board getBoard() {
+		return board;
+	}
 
-    public Player getPlayerOne() {
-        return playerOne;
-    }
+	public void setBoard(Board board) {
+		this.board = board;
+	}
 
-    public Player getOpponetPlayer() {
-        return opponetPlayer;
-    }
+	public com.webcheckers.model.message getMessage() {
+		return message;
+	}
 
-    public boolean isPlayerTurn() {
-        return playerTurn;
-    }
+	public void setMessage(com.webcheckers.model.message message) {
+		this.message = message;
+	}
 
-    public void setPlayerTurn(boolean playerTurn) {
-        this.playerTurn = playerTurn;
-    }
+	public String getGameID() {
+		return gameID;
+	}
 
-    public Board getBoard() {
-        return board;
-    }
+	public void setGameID(String gameID) {
+		this.gameID = gameID;
+	}
 
-    public void setBoard(Board board) {
-        this.board = board;
-    }
+	public webcheckersGame(final Player player, final Player opponetPlayer) {
+		this.opponetPlayer = opponetPlayer;
+		this.playerOne = player;
+	}
 
-    public com.webcheckers.model.message getMessage() {
-        return message;
-    }
+	public void resignStatus(String playerWhoHasResigned) {
+		this.playerWhoHasResigned = playerWhoHasResigned;
 
-    public void setMessage(com.webcheckers.model.message message) {
-        this.message = message;
-    }
+	}
 
+	/**
+	 * @param player
+	 * @param opponetPlayer
+	 * @param board
+	 */
+	public webcheckersGame(final Player player, final Player opponetPlayer, final Board board) {
+		this(player, opponetPlayer);
+		this.board = board;
 
-    public String getGameID() {
-        return gameID;
-    }
+	}
 
-    public void setGameID(String gameID) {
-        this.gameID = gameID;
-    }
+	/**
+	 *
+	 *
+	 * @return - Returns a boolean showing which players turn is playing now
+	 */
+	public void switchTurn() {
+		isMoved = false;
 
-    public webcheckersGame(final Player player, final Player opponetPlayer)
-    {
-        this.opponetPlayer = opponetPlayer;
-        this.playerOne = player;
-    }
-    public void resignStatus(String playerWhoHasResigned){
-        this.playerWhoHasResigned = playerWhoHasResigned;
+		if (currentPlayer.getPlayerName().equalsIgnoreCase(playerOne.getPlayerName())) {
 
-    }
+			currentPlayer = opponetPlayer;
+		} else {
+			currentPlayer = playerOne;
 
-    /**
-     * @param player
-     * @param opponetPlayer
-     * @param board
-     */
-    public webcheckersGame(final Player player, final Player opponetPlayer,final Board board)
-    {
-        this(player,opponetPlayer);
-        this.board = board;
+		}
+	}
 
-    }
+	/**
+	 * the method will make the move depends on the move object. when the move
+	 * reached the end of the board, it will become a king
+	 * 
+	 * @param move
+	 *            - Accepted Move parameter, which was sent from Json
+	 * @return - Void --
+	 */
+	public boolean makeTheMove(Move move) {
 
+		if (!isMoved) {
+			Piece piece = null;
+			if (piece == null) {
+				piece = board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).getPiece();
 
+				board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).setPiece(null); // remove
+																												// the
+																												// piece
+																												// from
+																												// start
+																												// portions
 
+				if (piece.getType() == Piece.Type.SINGLE) {
+					board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell())
+							.setPiece(new Piece(Piece.Type.SINGLE, currentPlayer.getPlayerColor())); // moved
 
-    /**
-     *
-     *
-     * @return - Returns a boolean showing which players turn is playing now
-     */
-    public void switchTurn()
-    {
-        isMoved = false;
+				} else {
+					board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell())
+							.setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor())); // moved
 
-        if (currentPlayer.getPlayerName().equalsIgnoreCase(playerOne.getPlayerName()))
-        {
+				}
 
-            currentPlayer = opponetPlayer;
-        }else {
-            currentPlayer = playerOne;
+				// change the piece when it reaches 7 or 0 to be king
+				if (currentPlayer.getPlayerColor() == Color.RED && move.getEnd().getRow() == 7
+						&& piece.getType() == Piece.Type.SINGLE) {
 
-        }
-    }
+					board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell())
+							.setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
 
+				} else if (currentPlayer.getPlayerColor() == Color.WHITE
+						&& move.getEnd().getRow() == 0 & piece.getType() == Piece.Type.SINGLE) {
 
+					board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell())
+							.setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
 
-    /**
-     * the method will make the move depends on the move object. when the move reached the end of the board, it will become a king
-     * @param move - Accepted Move parameter, which was sent from Json
-     * @return - Void --
-     */
-    public boolean makeTheMove(Move move) {
+				}
 
-        if (!isMoved){
-            Piece piece = null;
-            if (piece == null) {
-                piece = board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).getPiece();
+				isMoved = true;
+				return true;
 
-                board.rows.get(move.getStart().getRow()).spaces.get(move.getStart().getCell()).setPiece(null); // remove the piece from start portions
+			} else {
 
-                if (piece.getType() == Piece.Type.SINGLE) {
-                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.SINGLE, currentPlayer.getPlayerColor())); // moved
+				System.out.println("piece is null");
+				return false;
 
-                } else {
-                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor())); // moved
+			}
+		} else {
+			System.out.println("only one move is alow is null");
 
-                }
+			return false;
 
-                // change the piece when it reaches 7 or 0 to be king
-                if (currentPlayer.getPlayerColor() == Color.RED && move.getEnd().getRow() == 7 && piece.getType() == Piece.Type.SINGLE) {
+		}
 
-                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
+	}
 
+	/**
+	 * Check if the move legal
+	 *
+	 * @param move
+	 *            - Given player name d
+	 * @return - return boolean if the player is turned
+	 */
+	public boolean isValidMove(Move move) {
 
-                } else if (currentPlayer.getPlayerColor() == Color.WHITE && move.getEnd().getRow() == 0 & piece.getType() == Piece.Type.SINGLE) {
+		int startRow = move.getStart().getRow();
+		int startCol = move.getStart().getCell();
 
-                    board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell()).setPiece(new Piece(Piece.Type.KING, currentPlayer.getPlayerColor()));
+		Piece playerPiece = board.rows.get(startRow).spaces.get(startCol).getPiece();
 
+		if (playerPiece.getType() == Piece.Type.SINGLE) {
 
-                }
+			if (playerPiece.getColor() == Color.RED) {
+				System.out.println("single valid move.");
+				System.out.println("red");
+				System.out.println("getMoveMagnitude" + move.getMoveMagnitude());
 
-                isMoved = true;
-                return true;
+				if (move.getMoveMagnitude() == 1) {
 
-            } else {
+					return singleMoveCheck(move, playerPiece.getColor());
 
-                System.out.println("piece is null");
-                return false;
+				} else if (move.getMoveMagnitude() == 2) { // Jump
 
-            }
-        }else {
-            System.out.println("only one move is alow is null");
+					return jumpCheck(move, playerPiece.getColor());
+				}
+			} else if (playerPiece.getColor() == Color.WHITE) {
 
-            return false;
+				// regular move
 
-        }
+				if (move.getMoveMagnitude() == 1) {
+					return singleMoveCheck(move, playerPiece.getColor());
 
+				} else if (move.getMoveMagnitude() == 2) { // Jump
 
+					return jumpCheck(move, playerPiece.getColor());
 
-    }
+				}
 
-    /**
-     * Check if the move legal
-     *
-     * @param move - Given player name  d
-     * @return - return boolean if the player is turned
-     */
-    public boolean isValidMove(Move move) {
+			}
 
-        int startRow = move.getStart().getRow();
-        int startCol = move.getStart().getCell();
+		} else if (playerPiece.getType() == Piece.Type.KING) {
 
-        Piece playerPiece = board.rows.get(startRow).spaces.get(startCol).getPiece();
+			System.out.println("getMoveMagnitude   :  " + move.getMoveMagnitude());
 
+			if (move.getMoveMagnitude() == 1) { // singale move
+				if (singleForwardMove(move) || singleBackwardMove(move)) {
 
-        if (playerPiece.getType() == Piece.Type.SINGLE) {
+					return true;
+				} else {
+					return false;
+				}
 
-            if (playerPiece.getColor() == Color.RED) {
-                System.out.println("single valid move.");
-                System.out.println("red");
-                System.out.println("getMoveMagnitude" + move.getMoveMagnitude());
+			} else if (move.getMoveMagnitude() == 2) {
 
-                if (move.getMoveMagnitude() == 1) {
+				if (jumpForwardMove(move)) {
 
-                    return singleMoveCheck(move, playerPiece.getColor());
+					return checkForOpponentForward(move);
+				}
 
-                } else if (move.getMoveMagnitude() == 2) {  // Jump
+				if (jumpBackwardMove(move)) {
+					return checkForOpponentBackWard(move);
 
-                    return jumpCheck(move, playerPiece.getColor());
-                }
-            } else if (playerPiece.getColor() == Color.WHITE) {
+				}
 
+			}
 
-                // regular move
+		}
+		return false;
 
-                if (move.getMoveMagnitude() == 1) {
-                    return singleMoveCheck(move, playerPiece.getColor());
+	}
 
-                } else if (move.getMoveMagnitude() == 2) { // Jump
+	public boolean singleForwardMove(Move move) {
 
-                    return jumpCheck(move, playerPiece.getColor());
+		int startRow = move.getStart().getRow();
+		int startCol = move.getStart().getCell();
+		int endRow = move.getEnd().getRow();
+		int endCol = move.getEnd().getCell();
 
+		if (((endRow == startRow + 1) && (endCol == startCol + 1))
+				|| ((endRow == startRow + 1) && (endCol == startCol - 1))) {
 
-                }
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	public boolean singleBackwardMove(Move move) {
 
-            }
+		int startRow = move.getStart().getRow();
+		int startCol = move.getStart().getCell();
+		int endRow = move.getEnd().getRow();
+		int endCol = move.getEnd().getCell();
 
+		if (((endRow == startRow - 1) && (endCol == startCol + 1))
+				|| ((endRow == startRow - 1) && (endCol == startCol - 1))) {
 
-        } else if (playerPiece.getType() == Piece.Type.KING) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-            System.out.println("getMoveMagnitude   :  " + move.getMoveMagnitude());
+	public boolean singleMoveCheck(Move move, Color color) {
 
-            if (move.getMoveMagnitude() == 1) { // singale move
-                if (singleForwardMove(move) || singleBackwardMove(move)) {
+		if (color == Color.RED) {
 
+			return singleForwardMove(move);
 
-                    return true;
-                } else {
-                    return false;
-                }
+		} else if (color == Color.WHITE) {
 
+			return singleBackwardMove(move);
 
-            } else if (move.getMoveMagnitude() == 2) {
+		} else {
+			return false;
+		}
+	}
 
-                if (jumpForwardMove(move)) {
+	public boolean isTurn(String p) {
+		if (p.equalsIgnoreCase(currentPlayer.getPlayerName())) {
+			return true;
+		}
 
-                    return checkForOpponentForward(move);
-                }
+		return false;
+	}
 
-                if (jumpBackwardMove(move)) {
-                    return checkForOpponentBackWard(move);
+	/**
+	 * to check for jumping location in the forward direction for a disc. Checking
+	 * the location in terms of rows and columns. to check for red disc jump (which
+	 * travels from row 0 to row 7) and king jump
+	 * 
+	 * @param move
+	 * @return true if valid move else false
+	 */
+	public boolean jumpForwardMove(Move move) {
+		if (((move.getEnd().getRow() == move.getStart().getRow() + 2)
+				&& (((move.getEnd().getCell() == move.getStart().getCell() + 2))
+						|| (move.getEnd().getCell() == move.getStart().getCell() - 2)))) {
 
-                }
+			return true;
+		} else {
+			return false;
+		}
+	}
 
+	public boolean checkForOpponentForward(Move move) {
+		int startCol = move.getStart().getCell();
+		int endCol = move.getEnd().getCell();
+		Space jumpForwardSpace;
 
-            }
+		if (startCol < endCol) {
+			jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() + 1);
 
-        }
-        return false;
+		} else {
+			jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() - 1);
 
-    }
+		}
+		if (jumpForwardSpace.getPiece() != null) {
+			if (currentPlayer.getPlayerColor() != jumpForwardSpace.getPiece().getColor()) {
+				removedSpace = jumpForwardSpace;
 
-    public boolean singleForwardMove(Move move) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
 
-        int startRow = move.getStart().getRow();
-        int startCol = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCol = move.getEnd().getCell();
+	public boolean checkForOpponentBackWard(Move move) {
 
-        if (((endRow == startRow + 1) && (endCol == startCol + 1)) || ((endRow == startRow + 1) && (endCol == startCol - 1))) {
+		int startCol = move.getStart().getCell();
+		int endCol = move.getEnd().getCell();
+		Space space;
 
+		if (startCol < endCol) {
+			space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() + 1);
 
-            return true;
-        } else {
-            return false;
-        }
-    }
+		} else {
+			space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() - 1);
 
-    public boolean singleBackwardMove(Move move) {
+		}
 
-        int startRow = move.getStart().getRow();
-        int startCol = move.getStart().getCell();
-        int endRow = move.getEnd().getRow();
-        int endCol = move.getEnd().getCell();
+		if (space.getPiece() != null) {
+			if (currentPlayer.getPlayerColor() != space.getPiece().getColor()) {
+				removedSpace = space;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
 
-        if (((endRow == startRow - 1) && (endCol == startCol + 1)) || ((endRow == startRow - 1) && (endCol == startCol - 1))) {
+	}
 
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public Player isWon() {
 
-    public boolean singleMoveCheck(Move move, Color color) {
+		if (board.removedWhitePiece == 10) {
+			return playerOne;
+		} else if (board.removedRedPiece == 10) {
+			return opponetPlayer;
+		}
+		return null;
+	}
 
+	public void removePiece() {
 
-        if (color == Color.RED) {
+		if (removedSpace != null) {
+			if (removedSpace.getPiece().getColor() == Color.RED) {
+				board.removedRedPiece += 1;
 
-            return singleForwardMove(move);
+			} else if (removedSpace.getPiece().getColor() == Color.WHITE) {
+				board.removedWhitePiece += 1;
 
-        } else if (color == Color.WHITE) {
+			}
 
-            return singleBackwardMove(move);
+			System.out.println("r********Red**********" + board.removedRedPiece);
+			System.out.println("***********White****" + board.removedWhitePiece);
 
-        } else {
-            return false;
-        }
-    }
+			this.removedSpace.setPiece(null);
+			this.removedSpace = null;
 
-    public boolean isTurn(String p)
-    {
-        if (p.equalsIgnoreCase(currentPlayer.getPlayerName()))
-        {
-            return true;
-        }
+		}
+	}
 
-        return  false;
-    }
+	/**
+	 * to jump in the backward direction. (for white coin which travels from row
+	 * number 7 till row 0 and for the king jump)
+	 * 
+	 * @param move
+	 * @return true if valid jump else return false
+	 */
+	public boolean jumpBackwardMove(Move move) {
 
+		if (((move.getEnd().getRow() == move.getStart().getRow() - 2)
+				&& (((move.getEnd().getCell() == move.getStart().getCell() - 2))
+						|| (move.getEnd().getCell() == move.getStart().getCell() + 2)))) {
 
-    /**
-     * to check for jumping location in the forward direction for a disc. Checking the location in terms of rows and columns.
-     * to check for red disc jump (which travels from row 0 to row 7) and king jump
-     * @param move
-     * @return true if valid move else false
-     */
-    public boolean jumpForwardMove(Move move) {
-        if (((move.getEnd().getRow() == move.getStart().getRow() + 2) &&
-                (((move.getEnd().getCell() == move.getStart().getCell() + 2))
-                        || (move.getEnd().getCell() == move.getStart().getCell() - 2)))) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public boolean jumpCheck(Move move, Color color) { // checking before jumping whether the opponent disc is placed or
+														// no.
 
-    public boolean checkForOpponentForward(Move move) {
-        int startCol = move.getStart().getCell();
-        int endCol = move.getEnd().getCell();
-        Space jumpForwardSpace;
+		if (color == Color.RED) {
+			if (jumpForwardMove(move)) {
+				return checkForOpponentForward(move);
 
-        if (startCol < endCol) {
-            jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() + 1);
+			}
 
-        } else {
-            jumpForwardSpace = board.rows.get(move.getStart().getRow() + 1).spaces.get(move.getStart().getCell() - 1);
+		} else {
 
-        }
-        if (jumpForwardSpace.getPiece() != null) {
-            if (currentPlayer.getPlayerColor() != jumpForwardSpace.getPiece().getColor()) {
-                removedSpace = jumpForwardSpace;
+			if (jumpBackwardMove(move)) {
+				return checkForOpponentBackWard(move);
+			}
+		}
+		return false;
+	}
 
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		// If the object is compared with itself then return true
+		if (obj == this) {
+			return true;
+		}
 
-    public boolean checkForOpponentBackWard(Move move) {
+		if (!(obj instanceof webcheckersGame)) {
+			return false;
+		}
 
-        int startCol = move.getStart().getCell();
-        int endCol = move.getEnd().getCell();
-        Space space;
+		obj = (webcheckersGame) obj;
 
-        if (startCol < endCol) {
-            space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() + 1);
+		return this.opponetPlayer == ((webcheckersGame) obj).opponetPlayer
+				&& this.playerTurn == ((webcheckersGame) obj).playerTurn
+				&& this.playerOne == ((webcheckersGame) obj).playerOne
+				&& this.playerWhoHasResigned == ((webcheckersGame) obj).playerWhoHasResigned
+				&& this.gameID == ((webcheckersGame) obj).gameID
+				&& this.currentPlayer == ((webcheckersGame) obj).currentPlayer
+				&& this.board == ((webcheckersGame) obj).board && this.message == ((webcheckersGame) obj).message
 
-        } else {
-            space = board.rows.get(move.getStart().getRow() - 1).spaces.get(move.getStart().getCell() - 1);
-
-        }
-
-
-        if (space.getPiece() != null) {
-            if (currentPlayer.getPlayerColor() != space.getPiece().getColor()) {
-                removedSpace = space;
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-
-    }
-
-    public Player isWon() {
-
-       if (board.removedWhitePiece == 10){
-           return playerOne ;
-       }else if (board.removedRedPiece ==10){
-           return opponetPlayer;
-       }
-       return null;
-    }
-    public void removePiece() {
-
-        if (removedSpace != null) {
-            if (removedSpace.getPiece().getColor() ==  Color.RED){
-                board.removedRedPiece+=1;
-
-            }else  if (removedSpace.getPiece().getColor() ==  Color.WHITE) {
-                board.removedWhitePiece+=1;
-
-            }
-
-
-
-            System.out.println("r********Red**********" +   board.removedRedPiece);
-            System.out.println("***********White****" +   board.removedWhitePiece);
-
-            this.removedSpace.setPiece(null);
-            this.removedSpace = null;
-
-        }
-    }
-
-
-    /**
-     * to jump in the backward direction. (for white coin which travels from row number 7 till row 0 and for the king jump)
-     * @param move
-     * @return true if valid jump else return false
-     */
-    public boolean jumpBackwardMove(Move move) {
-
-
-        if (((move.getEnd().getRow() == move.getStart().getRow() - 2) &&
-                (((move.getEnd().getCell() == move.getStart().getCell() - 2))
-                        || (move.getEnd().getCell() == move.getStart().getCell() + 2)))) {
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public boolean jumpCheck(Move move, Color color) { //checking before jumping whether the opponent disc is placed or no.
-
-
-        if (color == Color.RED) {
-            if (jumpForwardMove(move)) {
-                return checkForOpponentForward(move);
-
-            }
-
-
-        } else {
-
-            if (jumpBackwardMove(move)) {
-                return checkForOpponentBackWard(move);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        // If the object is compared with itself then return true
-        if (obj == this) {
-            return true;
-        }
-
-
-        if (!(obj instanceof webcheckersGame)) {
-            return false;
-        }
-
-        obj = (webcheckersGame) obj;
-
-        return  this.opponetPlayer == ((webcheckersGame) obj).opponetPlayer
-                && this.playerTurn == ((webcheckersGame) obj).playerTurn
-                && this.playerOne == ((webcheckersGame) obj).playerOne
-                && this.playerWhoHasResigned == ((webcheckersGame) obj).playerWhoHasResigned
-                && this.gameID == ((webcheckersGame) obj).gameID
-                && this.currentPlayer == ((webcheckersGame) obj).currentPlayer
-                && this.board == ((webcheckersGame) obj).board
-                && this.message == ((webcheckersGame) obj).message
-
-                && this.numberCurrentPlayers == ((webcheckersGame) obj).numberCurrentPlayers;
-    }
+				&& this.numberCurrentPlayers == ((webcheckersGame) obj).numberCurrentPlayers;
+	}
 }
-
-
