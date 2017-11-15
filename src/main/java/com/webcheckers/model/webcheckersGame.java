@@ -131,8 +131,7 @@ public class webcheckersGame {
 																												// the
 																												// piece
 																												// from
-																												// start
-																												// portions
+																												// start// portions
 
 				if (piece.getType() == Piece.Type.SINGLE) {
 					board.rows.get(move.getEnd().getRow()).spaces.get(move.getEnd().getCell())

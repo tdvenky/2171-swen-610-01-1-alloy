@@ -63,7 +63,7 @@ public final class Application {
 	// Constructor
 	//
 
-	private Application(final WebServer webServer) {
+	public Application(final WebServer webServer) {
 		this.webServer = webServer;
 	}
 
@@ -71,7 +71,7 @@ public final class Application {
 	// Private methods
 	//
 
-	private void initialize() {
+	public void initialize() {
 		LOG.fine("WebCheckers is initializing.");
 
 		// configure Spark and startup the Jetty web server
