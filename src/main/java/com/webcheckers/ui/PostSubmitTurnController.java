@@ -12,69 +12,62 @@ import java.util.Objects;
 
 import static spark.Spark.halt;
 
-public class PostSubmitTurnController implements  Route {
+public class PostSubmitTurnController implements Route {
 
-    private final GameCenter gameCenter;
+	private final GameCenter gameCenter;
 
-    static final String PLAYER = "player";
+	static final String PLAYER = "player";
 
-    private webcheckersGame game;
+	private webcheckersGame game;
 
-    PostSubmitTurnController(final GameCenter gameCenter) {
-        //Validate that GameCenter is not null
-        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-        this.gameCenter = gameCenter;
-    }
+	PostSubmitTurnController(final GameCenter gameCenter) {
+		// Validate that GameCenter is not null
+		Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+		this.gameCenter = gameCenter;
+	}
 
+	@Override
+	public Object handle(Request request, Response response) {
 
-    @Override
-    public Object handle(Request request, Response response) {
+		String playerOne = request.session().attribute("playerName");
+		String playerOp = request.queryParams("OpponetPlayer");
 
-        String playerOne = request.session().attribute("playerName");
-        String playerOp = request.queryParams("OpponetPlayer");
+		System.out.println("PostSubmitTurnController " + playerOp);
+		game = gameCenter.getGameBy(playerOne, playerOp);
+		if (game == null) {
 
+			System.out.println("Game is null");
+			response.redirect("/");
+			return null;
 
-        System.out.println("PostSubmitTurnController "+playerOp);
-        game = gameCenter.getGameBy(playerOne,playerOp);
-        if (game ==null){
+		}
 
-            System.out.println("Game is null");
-            response.redirect("/");
-            return null;
+		// check who win the game.
+		if (game.isWon() != null) {
+			Player won = game.isWon();
+			System.out.println(won.getPlayerColor());
+			System.out.println(game.currentPlayer.getPlayerColor());
 
+			if (game.currentPlayer.getPlayerColor().equals(won.getPlayerColor())) {
+				game.switchTurn();
 
-        }
+				response.redirect("/youWon");
 
+			} else {
+				game.switchTurn();
 
+				response.redirect("/youLost");
+			}
 
-        // check who win the game.
-        if (game.isWon() !=null){
-            Player won = game.isWon();
-            System.out.println(won.getPlayerColor());
-            System.out.println(game.currentPlayer.getPlayerColor());
+			gameCenter.resignGame(game);
+			return null;
 
-            if (game.currentPlayer.getPlayerColor().equals(won.getPlayerColor())){
-                game.switchTurn();
+		}
+		game.switchTurn();
 
+		response.redirect("/");
+		halt();
 
-                response.redirect("/youWon");
-
-
-            }else {
-                game.switchTurn();
-
-                response.redirect("/youLost");
-            }
-
-            gameCenter.resignGame(game);
-            return null;
-
-        }
-        game.switchTurn();
-
-        response.redirect("/");
-        halt();
-
-        return null;
-    }
+		return null;
+	}
 }

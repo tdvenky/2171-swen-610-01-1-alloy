@@ -8,32 +8,28 @@ import java.util.Objects;
 
 public class PostCheckTurnController implements Route {
 
-    private final GameCenter gameCenter;
+	private final GameCenter gameCenter;
 
-    PostCheckTurnController(final GameCenter gameCenter) {
-        //Validate that GameCenter is not null
-        Objects.requireNonNull(gameCenter, "gameCenter must not be null");
-        this.gameCenter = gameCenter;
-    }
+	PostCheckTurnController(final GameCenter gameCenter) {
+		// Validate that GameCenter is not null
+		Objects.requireNonNull(gameCenter, "gameCenter must not be null");
+		this.gameCenter = gameCenter;
+	}
 
+	@Override
+	public Object handle(Request request, Response response) {
+		String playerOne = request.session().attribute("playerName");
+		String playerOp = request.session().attribute(playerOne);
 
-    @Override
-    public Object handle(Request request, Response response) {
-        String playerOne = request.session().attribute("playerName");
-        String playerOp = request.session().attribute(playerOne);
+		webcheckersGame game = gameCenter.getGameBy(playerOne, playerOp);
+		if (game == null) {
 
-        webcheckersGame game = gameCenter.getGameBy(playerOne, playerOp);
-        if (game ==null){
+			System.out.println("Game is null");
+			response.redirect("/");
+			return null;
 
-            System.out.println("Game is null");
-            response.redirect("/");
-            return null;
+		}
 
-
-        }
-
-
-
-        return   game.isTurn(playerOne);
-    }
+		return game.isTurn(playerOne);
+	}
 }

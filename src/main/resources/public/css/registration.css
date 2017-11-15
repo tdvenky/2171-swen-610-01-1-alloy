@@ -8,8 +8,7 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 300;
-    background-image: url("/img/checkers-board-game.png");
-    background-repeat: no-repeat;
+    background-color: #0b2e13;
     background-size: 100%;
 }
 body ::-webkit-input-placeholder {
@@ -65,8 +64,8 @@ body :-ms-input-placeholder {
     font-size: 40px;
     -webkit-transition-duration: 1s;
     transition-duration: 1s;
-    -webkit-transition-timing-function: ease-in-put;
-    transition-timing-function: ease-in-put;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
     font-weight: 300;
 }
 form {
